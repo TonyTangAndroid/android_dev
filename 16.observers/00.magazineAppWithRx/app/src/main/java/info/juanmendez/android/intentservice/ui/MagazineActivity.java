@@ -8,16 +8,14 @@ import android.view.MenuItem;
 
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import dagger.ObjectGraph;
+import dagger.android.support.DaggerAppCompatActivity;
 import info.juanmendez.android.intentservice.R;
-import info.juanmendez.android.intentservice.module.ActivityModule;
 import info.juanmendez.android.intentservice.ui.magazine.IMagazineView;
 import info.juanmendez.android.intentservice.ui.magazine.MagazinePresenter;
 
-public class MagazineActivity extends AppCompatActivity implements IMagazineView {
+public class MagazineActivity extends DaggerAppCompatActivity implements IMagazineView {
 
     ViewPager viewPager;
-    ObjectGraph graph;
 
     MagazinePresenter presenter;
 
@@ -25,18 +23,14 @@ public class MagazineActivity extends AppCompatActivity implements IMagazineView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magazine);
-
-        viewPager = (ViewPager) findViewById(R.id.pager);
-
-        MagazineApp app = (MagazineApp)getApplication();
-        graph = app.getGraph().plus( new ActivityModule(this));
-        graph.inject(this);
-        
+        viewPager = findViewById(R.id.pager);
         presenter = new MagazinePresenter(this);
     }
 
-    public void inject( Object object ){
-        graph.inject(object);
+
+    @Override
+    public void inject(Object object) {
+
     }
 
     @Override

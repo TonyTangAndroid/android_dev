@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 
+import info.juanmendez.android.intentservice.module.ActivityScope;
 import javax.inject.Inject;
 
 import info.juanmendez.android.intentservice.service.download.DownloadService;
@@ -16,6 +17,7 @@ import info.juanmendez.android.intentservice.service.download.DownloadService;
  *
  * Having a reference of our callback, we can call a specific method.
  */
+@ActivityScope
 public class DownloadProxy extends ResultReceiver
 {
     protected UiCallback callback;

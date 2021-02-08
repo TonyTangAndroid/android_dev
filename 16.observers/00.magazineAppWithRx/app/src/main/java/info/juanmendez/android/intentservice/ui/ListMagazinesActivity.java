@@ -9,11 +9,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import dagger.ObjectGraph;
+import dagger.android.support.DaggerAppCompatActivity;
 import info.juanmendez.android.intentservice.R;
 import info.juanmendez.android.intentservice.helper.NetworkUtil;
 import info.juanmendez.android.intentservice.model.adapter.MagazineAdapter;
-import info.juanmendez.android.intentservice.module.ActivityModule;
 import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesPresenter;
 import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesView;
 import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresenter;
@@ -21,9 +20,8 @@ import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresen
 /**
  * Created by Juan on 7/29/2015.
  */
-public class ListMagazinesActivity extends AppCompatActivity implements IListMagazinesView {
+public class ListMagazinesActivity extends DaggerAppCompatActivity implements IListMagazinesView {
 
-    ObjectGraph graph;
     ListView list;
     MagazineApp app;
     Button noNetworkButton;
@@ -48,12 +46,10 @@ public class ListMagazinesActivity extends AppCompatActivity implements IListMag
             noNetworkButton.setVisibility(View.VISIBLE);
         }
 
-        list = (ListView) findViewById(R.id.list );
+        list = findViewById(R.id.list );
         presenter = new ListMagazinesPresenter(this);
 
         app = (MagazineApp)getApplication();
-        graph = app.getGraph().plus( new ActivityModule(this));
-        graph.inject(presenter);
     }
 
 
