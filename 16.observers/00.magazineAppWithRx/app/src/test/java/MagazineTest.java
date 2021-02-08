@@ -21,7 +21,6 @@ import static org.robolectric.Shadows.shadowOf;
 
 
 @RunWith(RobolectricTestRunner.class)
-@Config( constants = BuildConfig.class, manifest="app/src/main/AndroidManifest.xml", sdk = 21 )
 public class MagazineTest {
 
     static{

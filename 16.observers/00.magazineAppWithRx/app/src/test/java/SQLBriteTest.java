@@ -1,29 +1,14 @@
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
-
+import androidx.test.core.app.ApplicationProvider;
 import com.squareup.sqlbrite.BriteContentResolver;
 import com.squareup.sqlbrite.BriteDatabase;
 import com.squareup.sqlbrite.SqlBrite;
-
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowContentResolver;
-import org.robolectric.shadows.ShadowLog;
-
-import java.util.ArrayList;
-import java.util.Date;
-
-import info.juanmendez.android.intentservice.BuildConfig;
 import info.juanmendez.android.intentservice.helper.MagazineUtil;
 import info.juanmendez.android.intentservice.helper.PageUtil;
 import info.juanmendez.android.intentservice.model.pojo.Magazine;
@@ -31,159 +16,160 @@ import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
 import info.juanmendez.android.intentservice.service.provider.table.SQLMagazine;
 import info.juanmendez.android.intentservice.service.provider.table.SqlHelper;
 import info.juanmendez.android.intentservice.ui.MagazineApp;
+import java.util.ArrayList;
+import java.util.Date;
+import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowContentResolver;
+import org.robolectric.shadows.ShadowLog;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
-@Config( constants = BuildConfig.class, manifest="src/main/AndroidManifest.xml", sdk = 21 )
-public class SQLBriteTest
-{
-    private ContentResolver resolver;
-    private ShadowContentResolver shadowResolver;
-    private MagazineProvider provider;
-    private MagazineApp app;
-    private SqlBrite sqlBrite;
-    private BriteContentResolver briteContentResolver;
-    private BriteDatabase briteDatase;
+public class SQLBriteTest {
 
-    static{
-        ShadowLog.stream = System.out;
-    }
+  private ContentResolver resolver;
+  private ShadowContentResolver shadowResolver;
+  private MagazineProvider provider;
+  private MagazineApp app;
+  private SqlBrite sqlBrite;
+  private BriteContentResolver briteContentResolver;
+  private BriteDatabase briteDatase;
 
-   @Before
-    public void prep(){
+  static {
+    ShadowLog.stream = System.out;
+  }
 
-        app = (MagazineApp) RuntimeEnvironment.application;
-        provider = new MagazineProvider();
-        resolver = RuntimeEnvironment.application.getContentResolver();
-        shadowResolver = shadowOf(resolver);
-        provider.onCreate();
+  @Before
+  public void prep() {
 
-     ProviderInfo info = new ProviderInfo();
-     info.authority = MagazineProvider.AUTHORITY;
-     Robolectric.buildContentProvider(MagazineProvider.class).create(info);
+    app = ApplicationProvider.getApplicationContext();
+    provider = new MagazineProvider();
+    resolver = app.getContentResolver();
+    shadowResolver = shadowOf(resolver);
+    provider.onCreate();
 
-       sqlBrite = SqlBrite.create();
-       briteContentResolver = sqlBrite.wrapContentProvider(resolver);
-       briteDatase = sqlBrite.wrapDatabaseHelper( new SqlHelper(app));
-    }
+    ProviderInfo info = new ProviderInfo();
+    info.authority = MagazineProvider.AUTHORITY;
+    Robolectric.buildContentProvider(MagazineProvider.class).create(info);
 
-    //@Test
-    public  void testContentProvider()
-    {
+    sqlBrite = SqlBrite.create();
+    briteContentResolver = sqlBrite.wrapContentProvider(resolver);
+    briteDatase = sqlBrite.wrapDatabaseHelper(new SqlHelper(app));
+  }
 
-        ArrayList<Magazine> magazines = new ArrayList<Magazine>();
-        Uri uri = Uri.parse( "content://" + MagazineProvider.AUTHORITY + "/magazines" );
-        Uri result;
+  //@Test
+  public void testContentProvider() {
 
-        ContentValues row = new ContentValues();
-        row.put(SQLMagazine.ISSUE, "2.22");
-        row.put(SQLMagazine.DATETIME, PageUtil.TableUtils.dateFormat(new Date()));
-        row.put(SQLMagazine.LOCATION, "/wherever/1.zip");
+    ArrayList<Magazine> magazines = new ArrayList<Magazine>();
+    Uri uri = Uri.parse("content://" + MagazineProvider.AUTHORITY + "/magazines");
+    Uri result;
 
-        result = resolver.insert(uri, row);
+    ContentValues row = new ContentValues();
+    row.put(SQLMagazine.ISSUE, "2.22");
+    row.put(SQLMagazine.DATETIME, PageUtil.TableUtils.dateFormat(new Date()));
+    row.put(SQLMagazine.LOCATION, "/wherever/1.zip");
 
-        Assert.assertEquals( result.getPath(), uri.getPath() + "/1");
+    result = resolver.insert(uri, row);
 
-        row = new ContentValues();
-        row.put(SQLMagazine.ISSUE, "2.23");
-        row.put(SQLMagazine.DATETIME, "2015-01-01 00:00:00");
-        row.put(SQLMagazine.LOCATION, "/wherever/2.zip");
-        result = resolver.insert(uri, row);
+    Assert.assertEquals(result.getPath(), uri.getPath() + "/1");
 
-        Assert.assertEquals(result.getPath(), uri.getPath() + "/2");
+    row = new ContentValues();
+    row.put(SQLMagazine.ISSUE, "2.23");
+    row.put(SQLMagazine.DATETIME, "2015-01-01 00:00:00");
+    row.put(SQLMagazine.LOCATION, "/wherever/2.zip");
+    result = resolver.insert(uri, row);
 
-        Observable<SqlBrite.Query> queryObservable = briteContentResolver.createQuery(uri, new String[]
-                        {SQLMagazine.ID, SQLMagazine.ISSUE,
-                                SQLMagazine.TITLE,
-                                SQLMagazine.LOCATION,
-                                SQLMagazine.FILE_LOCATION,
-                                SQLMagazine.DATETIME,
-                                SQLMagazine.STATUS},
-                null,
-                null,
-                SQLMagazine.ISSUE + " desc", false);
+    Assert.assertEquals(result.getPath(), uri.getPath() + "/2");
 
-        /**
-         * prints
-         * Magazine( issue: 2.23, location: /wherever/2.zip, title: null, file_location: null )
-         * Magazine( issue: 2.22, location: /wherever/1.zip, title: null, file_location: null )
-         */
-        queryObservable
-                .map(query -> {
-                    ArrayList<Magazine> list = new ArrayList<>();
+    Observable<SqlBrite.Query> queryObservable = briteContentResolver.createQuery(uri, new String[]
+            {SQLMagazine.ID, SQLMagazine.ISSUE,
+                SQLMagazine.TITLE,
+                SQLMagazine.LOCATION,
+                SQLMagazine.FILE_LOCATION,
+                SQLMagazine.DATETIME,
+                SQLMagazine.STATUS},
+        null,
+        null,
+        SQLMagazine.ISSUE + " desc", false);
 
-                    Cursor cursor = query.run();
-                    while (cursor.moveToNext()) {
-                        list.add(MagazineUtil.fromCursor(cursor));
-                    }
+    /**
+     * prints
+     * Magazine( issue: 2.23, location: /wherever/2.zip, title: null, file_location: null )
+     * Magazine( issue: 2.22, location: /wherever/1.zip, title: null, file_location: null )
+     */
+    queryObservable
+        .map(query -> {
+          ArrayList<Magazine> list = new ArrayList<>();
 
-                    return list;
-                })
-                .subscribe(thoseMagazines -> {
-                    for (Magazine m : thoseMagazines) {
-                        Log.print(m.toString());
-                    }
-                });
-    }
+          Cursor cursor = query.run();
+          while (cursor.moveToNext()) {
+            list.add(MagazineUtil.fromCursor(cursor));
+          }
 
-    @Test
-    public void testDatabase()
-    {
-        briteDatase.createQuery( SQLMagazine.TABLE, "SELECT * FROM " + SQLMagazine.TABLE , new String[]{} )
-                .map(query -> {
-                    ArrayList<Magazine> list = new ArrayList<>();
+          return list;
+        })
+        .subscribe(thoseMagazines -> {
+          for (Magazine m : thoseMagazines) {
+            Log.print(m.toString());
+          }
+        });
+  }
 
-                    try {
-                        Cursor cursor = query.run();
-                        while (cursor.moveToNext()) {
-                            list.add(MagazineUtil.fromCursor(cursor));
-                        }
+  @Test
+  public void testDatabase() {
+    briteDatase.createQuery(SQLMagazine.TABLE, "SELECT * FROM " + SQLMagazine.TABLE, new String[]{})
+        .map(query -> {
+          ArrayList<Magazine> list = new ArrayList<>();
 
-                        cursor.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+          try {
+            Cursor cursor = query.run();
+            while (cursor.moveToNext()) {
+              list.add(MagazineUtil.fromCursor(cursor));
+            }
 
-                    return list;
-                })
-                .subscribe(thoseMagazines -> {
+            cursor.close();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
 
-                    Log.print("================================");
-                    Log.print("ON TABLE UPDATE, THEN ITERATE");
-                    for (Magazine m : thoseMagazines) {
-                        Log.print(m.toString());
-                    }
-                    Log.print("================================");
-                });
+          return list;
+        })
+        .subscribe(thoseMagazines -> {
 
+          Log.print("================================");
+          Log.print("ON TABLE UPDATE, THEN ITERATE");
+          for (Magazine m : thoseMagazines) {
+            Log.print(m.toString());
+          }
+          Log.print("================================");
+        });
 
-        ArrayList<Magazine> magazines = new ArrayList<Magazine>();
+    ArrayList<Magazine> magazines = new ArrayList<Magazine>();
 
-        ContentValues row = new ContentValues();
-        row.put(SQLMagazine.ISSUE, "2.22");
-        row.put(SQLMagazine.DATETIME, PageUtil.TableUtils.dateFormat(new Date()));
-        row.put(SQLMagazine.LOCATION, "/wherever/1.zip");
+    ContentValues row = new ContentValues();
+    row.put(SQLMagazine.ISSUE, "2.22");
+    row.put(SQLMagazine.DATETIME, PageUtil.TableUtils.dateFormat(new Date()));
+    row.put(SQLMagazine.LOCATION, "/wherever/1.zip");
 
-        long id = briteDatase.insert(SQLMagazine.TABLE, row);
-        Assert.assertEquals( id, 1 );
+    long id = briteDatase.insert(SQLMagazine.TABLE, row);
+    Assert.assertEquals(id, 1);
 
-        row = new ContentValues();
-        row.put(SQLMagazine.ISSUE, "2.23");
-        row.put(SQLMagazine.DATETIME, "2015-01-01 00:00:00");
-        row.put(SQLMagazine.LOCATION, "/wherever/2.zip");
+    row = new ContentValues();
+    row.put(SQLMagazine.ISSUE, "2.23");
+    row.put(SQLMagazine.DATETIME, "2015-01-01 00:00:00");
+    row.put(SQLMagazine.LOCATION, "/wherever/2.zip");
 
-        id = briteDatase.insert(SQLMagazine.TABLE, row );
-        Assert.assertEquals(id, 2);
+    id = briteDatase.insert(SQLMagazine.TABLE, row);
+    Assert.assertEquals(id, 2);
 
+    row = new ContentValues();
+    row.put(SQLMagazine.LOCATION, "/new_folder/2016.zip");
 
-        row = new ContentValues();
-        row.put(SQLMagazine.LOCATION, "/new_folder/2016.zip");
-
-        briteDatase.update(SQLMagazine.TABLE, row, SQLMagazine.ID + "=?", "2");
-        briteDatase.delete( SQLMagazine.TABLE, SQLMagazine.ID + "=?", "2" );
-    }
+    briteDatase.update(SQLMagazine.TABLE, row, SQLMagazine.ID + "=?", "2");
+    briteDatase.delete(SQLMagazine.TABLE, SQLMagazine.ID + "=?", "2");
+  }
 }

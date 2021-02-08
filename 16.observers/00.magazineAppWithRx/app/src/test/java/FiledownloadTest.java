@@ -1,18 +1,7 @@
 import android.content.Context;
 import android.content.Intent;
-
-import org.apache.commons.io.IOUtils;
-
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.android.controller.ActivityController;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowLog;
-
+import info.juanmendez.android.intentservice.service.download.DownloadService;
+import info.juanmendez.android.intentservice.ui.MagazineActivity;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,40 +12,45 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import info.juanmendez.android.intentservice.BuildConfig;
-import info.juanmendez.android.intentservice.ui.MagazineActivity;
-import info.juanmendez.android.intentservice.service.download.DownloadService;
+import org.apache.commons.io.IOUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.android.controller.ActivityController;
+import org.robolectric.shadows.ShadowLog;
 
 /**
  * Created by Juan on 7/22/2015.
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config( constants = BuildConfig.class, manifest="app/src/main/AndroidManifest.xml" )
 public class FiledownloadTest {
 
-    static{
-        ShadowLog.stream = System.out;
-    }
+  static {
+    ShadowLog.stream = System.out;
+  }
 
-    private MagazineActivity activity;
-    private ActivityController controller;
+  private MagazineActivity activity;
+  private ActivityController controller;
 
-    @Before
-    public void buildActivity(){
-        controller = Robolectric.buildActivity( MagazineActivity.class ).create().start().resume().visible();
-        activity = (MagazineActivity) controller.get();
+  @Before
+  public void buildActivity() {
+    controller = Robolectric.buildActivity(MagazineActivity.class).create().start().resume()
+        .visible();
+    activity = (MagazineActivity) controller.get();
 
-        System.out.println( "hello world");
-    }
+    System.out.println("hello world");
+  }
 
-    /**
-     * lets test downloadservice with activity
-     */
+  /**
+   * lets test downloadservice with activity
+   */
 
-    @Test
-    public void testDownloadService(){
+  @Test
+  public void testDownloadService() {
 
         /*
         UIReceiver downloadReceiver = new UIReceiver( new Handler() );
@@ -73,87 +67,87 @@ public class FiledownloadTest {
 
         DownloadServiceMock service = new DownloadServiceMock();
         service.onHandleIntent( i );*/
+  }
+
+  public class DownloadServiceMock extends DownloadService {
+
+    @Override
+    public void onHandleIntent(Intent intent) {
+      super.onHandleIntent(intent);
+    }
+  }
+
+  //@Test
+  public void testDownloading() {
+    Context context = RuntimeEnvironment.application.getApplicationContext();
+
+    FileOutputStream fos = null;
+    InputStream is = null;
+    File downloads = new File(context.getFilesDir(), "downloads");
+    downloads.mkdir();
+
+    File unzipDir = new File(context.getFilesDir(), "zip_1");
+    unzipDir.mkdir();
+
+    File[] listOfFiles = unzipDir.listFiles();
+
+    for (File f : listOfFiles) {
+
+      f.delete();
     }
 
-    public class DownloadServiceMock extends DownloadService{
+    File target = new File(downloads, "zippy.zip");
 
-        @Override
-        public void onHandleIntent( Intent intent ){
-            super.onHandleIntent(intent);
-        }
+    if (target.exists()) {
+      target.delete();
     }
 
-    //@Test
-    public  void testDownloading()
-    {
-        Context context = RuntimeEnvironment.application.getApplicationContext();
+    try {
+      URL url = new URL("http://ketchup/development/android/zippy.zip");
+      fos = new FileOutputStream(target.getPath());
+      is = url.openStream();
+      url.openConnection();
+      IOUtils.copy(is, fos);
 
-        FileOutputStream fos = null;
-        InputStream is = null;
-        File downloads = new File( context.getFilesDir(), "downloads" );
-        downloads.mkdir();
+      IOUtils.closeQuietly(is);
+      IOUtils.closeQuietly(fos);
 
-        File unzipDir = new File( context.getFilesDir(), "zip_1");
-        unzipDir.mkdir();
+      ZipFile zipFile = new ZipFile(target);
 
-        File[] listOfFiles = unzipDir.listFiles();
+      Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-        for( File f: listOfFiles ){
+      while (entries.hasMoreElements()) {
+        ZipEntry entry = entries.nextElement();
+        File entryDestination = new File(unzipDir, entry.getName());
 
-            f.delete();
+        if (entry.isDirectory()) {
+          entryDestination.mkdir();
+        } else {
+          is = zipFile.getInputStream(entry);
+          fos = new FileOutputStream(entryDestination);
+
+          IOUtils.copy(is, fos);
+          IOUtils.closeQuietly(is);
+          IOUtils.closeQuietly(fos);
         }
+      }
 
-        File target = new File( downloads, "zippy.zip" );
+      zipFile.close();
 
-        if( target.exists() )
-            target.delete();
+      listOfFiles = unzipDir.listFiles();
 
-        try {
-            URL url = new URL( "http://ketchup/development/android/zippy.zip" );
-            fos = new FileOutputStream( target.getPath() );
-            is = url.openStream();
-            url.openConnection();
-            IOUtils.copy( is, fos );
+      for (File f : listOfFiles) {
 
-            IOUtils.closeQuietly(is);
-            IOUtils.closeQuietly(fos);
+        Log.print(f.getName());
+      }
 
-            ZipFile zipFile = new ZipFile( target );
-
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-
-            while( entries.hasMoreElements()){
-                ZipEntry entry = entries.nextElement();
-                File entryDestination = new File( unzipDir, entry.getName() );
-
-                if( entry.isDirectory() ){
-                    entryDestination.mkdir();
-                }else{
-                     is = zipFile.getInputStream( entry );
-                     fos = new FileOutputStream( entryDestination );
-
-                    IOUtils.copy( is, fos );
-                    IOUtils.closeQuietly(is);
-                    IOUtils.closeQuietly( fos );
-                }
-            }
-
-            zipFile.close();
-
-            listOfFiles = unzipDir.listFiles();
-
-            for( File f: listOfFiles ){
-
-                Log.print( f.getName() );
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
 }

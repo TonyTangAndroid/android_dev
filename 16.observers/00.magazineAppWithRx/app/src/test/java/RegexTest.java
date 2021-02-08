@@ -14,7 +14,6 @@ import info.juanmendez.android.intentservice.BuildConfig;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config( constants = BuildConfig.class, manifest="src/main/AndroidManifest.xml", sdk = 21 )
 public class RegexTest {
 
     @Test

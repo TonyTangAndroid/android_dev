@@ -9,29 +9,17 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdd75f09-38c3-40d1-9e7d-ea248811410b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+    <list default="true" id="cdd75f09-38c3-40d1-9e7d-ea248811410b" name="Default" comment="Migrate to AndroidX">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/model/adapter/WebViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/model/adapter/WebViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/alarm/WakeReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/alarm/WakeReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/magazine/MagazineListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/magazine/MagazineListService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/network/NetworkReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/network/NetworkReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/ListMagazinesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/ListMagazinesActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/SettingsHolderActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/SettingsHolderActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/WebViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/WebViewFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/IMagazineView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/IMagazineView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/MagazinePresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/MagazinePresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_magazine.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_magazine.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/ContentProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/ContentProviderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/FiledownloadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/FiledownloadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/MagazineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/MagazineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/RegexTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/RegexTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/SQLBriteTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/SQLBriteTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/TestDownloadProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/TestDownloadProxy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,10 +59,13 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="multi-representation-preview/Users/tonythompson/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java_selected" value="Custom views" />
     <property name="multi-representation-preview/Users/tonythompson/code/android_dev/16.observers/00.magazineAppWithRx/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineRow.java_selected" value="Custom views" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Android JUnit.ContentProviderTest">
+  <component name="RunManager" selected="Android JUnit.SQLBriteTest">
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -98,10 +89,32 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FiledownloadTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="00.magazineAppWithRx.app" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="FiledownloadTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RegexTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="00.magazineAppWithRx.app" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="RegexTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SQLBriteTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="00.magazineAppWithRx.app" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="SQLBriteTest" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -239,12 +252,16 @@
       <item itemvalue="Android JUnit.RegexTest" />
       <item itemvalue="Android JUnit.TestDownloadProxy" />
       <item itemvalue="Android JUnit.ContentProviderTest" />
+      <item itemvalue="Android JUnit.FiledownloadTest" />
+      <item itemvalue="Android JUnit.SQLBriteTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Android JUnit.SQLBriteTest" />
+        <item itemvalue="Android JUnit.FiledownloadTest" />
+        <item itemvalue="Android JUnit.RegexTest" />
         <item itemvalue="Android JUnit.ContentProviderTest" />
         <item itemvalue="Android JUnit.TestDownloadProxy" />
-        <item itemvalue="Android JUnit.RegexTest" />
       </list>
     </recent_temporary>
   </component>
@@ -259,6 +276,14 @@
       <option name="presentableId" value="Default" />
       <updated>1485488566832</updated>
     </task>
+    <task id="LOCAL-00001" summary="Migrate to AndroidX">
+      <created>1612777913473</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1612777913473</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -269,18 +294,53 @@
       <collection />
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Migrate to AndroidX" />
+    <option name="LAST_COMMIT_MESSAGE" value="Migrate to AndroidX" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="805" y="459" key="#PSD" timestamp="1612778260349">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="805" y="459" key="#PSD/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778260349" />
     <state x="1093" y="433" key="#com.intellij.ide.util.MemberChooser" timestamp="1612777474775">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1093" y="433" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777474775" />
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog" timestamp="1612777635127">
-      <screen x="48" y="23" width="2512" height="1417" />
-    </state>
-    <state x="100" y="100" width="2360" height="1240" key="DiffContextDialog/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612777635127" />
-    <state x="972" y="475" width="615" height="490" key="find.popup" timestamp="1612777234628">
+    <state x="759" y="315" key="CommitChangelistDialog2" timestamp="1612777913281">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="972" y="475" width="615" height="490" key="find.popup/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777234628" />
+    <state x="759" y="315" key="CommitChangelistDialog2/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777913281" />
+    <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog" timestamp="1612778272793">
+      <screen x="48" y="23" width="2512" height="1417" />
+    </state>
+    <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777924776" />
+    <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612778272793" />
+    <state width="2518" height="424" key="GridCell.Tab.0.bottom" timestamp="1612778313005">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="424" key="GridCell.Tab.0.bottom/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778313005" />
+    <state width="2518" height="424" key="GridCell.Tab.0.center" timestamp="1612778313003">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="424" key="GridCell.Tab.0.center/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778313003" />
+    <state width="2518" height="424" key="GridCell.Tab.0.left" timestamp="1612778313002">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="424" key="GridCell.Tab.0.left/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778313002" />
+    <state width="2518" height="424" key="GridCell.Tab.0.right" timestamp="1612778313004">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="424" key="GridCell.Tab.0.right/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778313004" />
+    <state x="972" y="475" width="615" height="490" key="find.popup" timestamp="1612778062986">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="972" y="475" width="615" height="490" key="find.popup/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778062986" />
+    <state x="940" y="515" key="git4idea.merge.GitPullDialog" timestamp="1612777779481">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="940" y="515" key="git4idea.merge.GitPullDialog/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777779481" />
   </component>
 </project>
