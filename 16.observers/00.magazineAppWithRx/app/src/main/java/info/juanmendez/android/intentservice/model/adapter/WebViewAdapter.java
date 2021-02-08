@@ -1,17 +1,15 @@
 package info.juanmendez.android.intentservice.model.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import info.juanmendez.android.intentservice.helper.MVPUtils;
-import info.juanmendez.android.intentservice.model.pojo.Magazine;
-import info.juanmendez.android.intentservice.model.pojo.Page;
 import info.juanmendez.android.intentservice.service.download.MagazineDispatcher;
 import info.juanmendez.android.intentservice.ui.MagazinePage;
 import info.juanmendez.android.intentservice.ui.magazine.IMagazineView;

@@ -1,11 +1,9 @@
 package info.juanmendez.android.intentservice.module;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.sqlbrite.BriteContentResolver;
 import com.squareup.sqlbrite.SqlBrite;
 
@@ -17,7 +15,6 @@ import info.juanmendez.android.intentservice.ui.ListMagazinesActivity;
 import info.juanmendez.android.intentservice.ui.MagazineActivity;
 import info.juanmendez.android.intentservice.service.proxy.DownloadProxy;
 import info.juanmendez.android.intentservice.model.adapter.WebViewAdapter;
-import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesPresenter;
 import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresenter;
 import info.juanmendez.android.intentservice.ui.magazine.MagazinePresenter;
 

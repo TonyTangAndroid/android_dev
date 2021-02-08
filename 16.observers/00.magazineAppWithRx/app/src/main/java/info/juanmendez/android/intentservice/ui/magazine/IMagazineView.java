@@ -1,7 +1,7 @@
 package info.juanmendez.android.intentservice.ui.magazine;
 
-import android.support.v4.app.LoaderManager;
-import android.support.v4.view.PagerAdapter;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 /**
  * Created by Juan on 8/20/2015.

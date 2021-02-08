@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.v4.content.WakefulBroadcastReceiver;
 
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import info.juanmendez.android.intentservice.model.MagazinesPref;
 import info.juanmendez.android.intentservice.service.magazine.MagazineListService;
 

@@ -1,25 +1,12 @@
+import static org.robolectric.Shadows.shadowOf;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowContentResolver;
-import org.robolectric.shadows.ShadowLog;
-
-import java.util.ArrayList;
-import java.util.Date;
-
 import info.juanmendez.android.intentservice.BuildConfig;
-import info.juanmendez.android.intentservice.ui.MagazineApp;
 import info.juanmendez.android.intentservice.helper.MagazineUtil;
 import info.juanmendez.android.intentservice.helper.PageUtil;
 import info.juanmendez.android.intentservice.model.pojo.Magazine;
@@ -27,8 +14,19 @@ import info.juanmendez.android.intentservice.model.pojo.Page;
 import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
 import info.juanmendez.android.intentservice.service.provider.table.SQLMagazine;
 import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
-
-import static org.robolectric.Shadows.shadowOf;
+import info.juanmendez.android.intentservice.ui.MagazineApp;
+import java.util.ArrayList;
+import java.util.Date;
+import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowContentResolver;
+import org.robolectric.shadows.ShadowLog;
 
 @RunWith(RobolectricTestRunner.class)
 @Config( constants = BuildConfig.class, manifest="src/main/AndroidManifest.xml", sdk = 21 )
@@ -51,8 +49,11 @@ public class ContentProviderTest
         resolver = RuntimeEnvironment.application.getContentResolver();
         shadowResolver = shadowOf(resolver);
         provider.onCreate();
-        ShadowContentResolver.registerProvider(MagazineProvider.AUTHORITY, provider);
-    }
+
+         ProviderInfo info = new ProviderInfo();
+         info.authority = MagazineProvider.AUTHORITY;
+         Robolectric.buildContentProvider(MagazineProvider.class).create(info);
+     }
 
     //@Test
     public  void testContentProvider()

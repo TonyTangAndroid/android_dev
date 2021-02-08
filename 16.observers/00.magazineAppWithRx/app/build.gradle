@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
+    flavorDimensions "default"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "info.juanmendez.android.intentservice"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 1
         versionName "1.1"
     }
@@ -50,31 +50,25 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile "commons-io:commons-io:2.4"
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    compile 'com.squareup.dagger:dagger-compiler:1.2.2'
-    compile 'com.joanzapata.android:android-iconify:1.0.9'
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'androidx.viewpager:viewpager:1.0.0'
+    api 'com.squareup.retrofit:retrofit:1.9.0'
+    api "commons-io:commons-io:2.8.0"
+    api 'com.squareup.dagger:dagger:1.2.2'
+    api 'com.squareup.dagger:dagger-compiler:1.2.2'
+    api 'com.joanzapata.android:android-iconify:1.0.9'
 
-    testCompile('org.robolectric:robolectric:3.0') {
+    api 'io.reactivex:rxandroid:1.2.1'
+    api 'io.reactivex:rxjava:1.3.8'
+    api 'com.squareup.sqlbrite:sqlbrite:0.5.0'
+
+    //noinspection GradleDependency
+    testImplementation('org.robolectric:robolectric:3.8') {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-    testCompile "junit:junit:4.12";
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
-    }
+    testImplementation "junit:junit:4.13.1";
 }

@@ -2,13 +2,13 @@ package info.juanmendez.android.intentservice.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import dagger.ObjectGraph;
 import info.juanmendez.android.intentservice.R;
 import info.juanmendez.android.intentservice.helper.NetworkUtil;
@@ -21,7 +21,7 @@ import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresen
 /**
  * Created by Juan on 7/29/2015.
  */
-public class ListMagazinesActivity extends AppCompatActivity  implements IListMagazinesView {
+public class ListMagazinesActivity extends AppCompatActivity implements IListMagazinesView {
 
     ObjectGraph graph;
     ListView list;

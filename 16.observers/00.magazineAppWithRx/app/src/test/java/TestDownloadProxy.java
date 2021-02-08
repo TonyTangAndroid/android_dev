@@ -1,15 +1,16 @@
 import android.content.ContentResolver;
 
+import android.content.pm.ProviderInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowLog;
-import org.robolectric.util.ActivityController;
 
 import info.juanmendez.android.intentservice.BuildConfig;
 import info.juanmendez.android.intentservice.ui.ListMagazinesActivity;
@@ -39,8 +40,12 @@ public class TestDownloadProxy
         resolver = RuntimeEnvironment.application.getContentResolver();
         shadowResolver = shadowOf(resolver);
         provider.onCreate();
-        ShadowContentResolver.registerProvider(MagazineProvider.AUTHORITY, provider);
-    }
+
+        ProviderInfo info = new ProviderInfo();
+        info.authority = MagazineProvider.AUTHORITY;
+        Robolectric.buildContentProvider(MagazineProvider.class).create(info);
+
+     }
 
     @Test
     public void testProxyMock(){

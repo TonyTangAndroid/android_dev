@@ -1,5 +1,6 @@
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -12,6 +13,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -59,7 +61,10 @@ public class SQLBriteTest
         resolver = RuntimeEnvironment.application.getContentResolver();
         shadowResolver = shadowOf(resolver);
         provider.onCreate();
-        ShadowContentResolver.registerProvider(MagazineProvider.AUTHORITY, provider);
+
+     ProviderInfo info = new ProviderInfo();
+     info.authority = MagazineProvider.AUTHORITY;
+     Robolectric.buildContentProvider(MagazineProvider.class).create(info);
 
        sqlBrite = SqlBrite.create();
        briteContentResolver = sqlBrite.wrapContentProvider(resolver);
