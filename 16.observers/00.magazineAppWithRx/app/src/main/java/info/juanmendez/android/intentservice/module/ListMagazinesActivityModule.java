@@ -15,9 +15,7 @@ import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Juan on 7/29/2015.
- */
+/** Created by Juan on 7/29/2015. */
 @Module
 public abstract class ListMagazinesActivityModule {
 
@@ -31,7 +29,7 @@ public abstract class ListMagazinesActivityModule {
 
   @Binds
   @ActivityScope
-  public abstract IListMagazinesView listMagazinesView (ListMagazinesActivity activity);
+  public abstract IListMagazinesView listMagazinesView(ListMagazinesActivity activity);
 
   @Provides
   @ActivityScope
@@ -47,7 +45,7 @@ public abstract class ListMagazinesActivityModule {
 
   @Provides
   @ActivityScope
-  static public BriteContentResolver providesContentResolver(Activity activity, SqlBrite sqlBrite) {
+  public static BriteContentResolver providesContentResolver(Activity activity, SqlBrite sqlBrite) {
 
     return sqlBrite.wrapContentProvider(activity.getContentResolver());
   }

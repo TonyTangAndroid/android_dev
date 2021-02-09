@@ -22,10 +22,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowLog;
 
-/**
- * Created by Juan on 7/22/2015.
- */
-
+/** Created by Juan on 7/22/2015. */
 @RunWith(RobolectricTestRunner.class)
 public class FiledownloadTest {
 
@@ -38,35 +35,32 @@ public class FiledownloadTest {
 
   @Before
   public void buildActivity() {
-    controller = Robolectric.buildActivity(MagazineActivity.class).create().start().resume()
-        .visible();
+    controller =
+        Robolectric.buildActivity(MagazineActivity.class).create().start().resume().visible();
     activity = (MagazineActivity) controller.get();
 
     System.out.println("hello world");
   }
 
-  /**
-   * lets test downloadservice with activity
-   */
-
+  /** lets test downloadservice with activity */
   @Test
   public void testDownloadService() {
 
-        /*
-        UIReceiver downloadReceiver = new UIReceiver( new Handler() );
+    /*
+    UIReceiver downloadReceiver = new UIReceiver( new Handler() );
 
-        downloadReceiver.setCallback(new UIReceiver.UiCallback() {
-            @Override
-            public void onReceiveResult(int resultCode, Bundle resultData) {
-                Log.print("Received.. " + Integer.toString(resultCode) + " " + resultData.getString("message", "hello"));
-            }
-        });
+    downloadReceiver.setCallback(new UIReceiver.UiCallback() {
+        @Override
+        public void onReceiveResult(int resultCode, Bundle resultData) {
+            Log.print("Received.. " + Integer.toString(resultCode) + " " + resultData.getString("message", "hello"));
+        }
+    });
 
-        Intent i = new Intent( RuntimeEnvironment.application, DownloadService.class );
-        i.putExtra( "receiver", downloadReceiver );
+    Intent i = new Intent( RuntimeEnvironment.application, DownloadService.class );
+    i.putExtra( "receiver", downloadReceiver );
 
-        DownloadServiceMock service = new DownloadServiceMock();
-        service.onHandleIntent( i );*/
+    DownloadServiceMock service = new DownloadServiceMock();
+    service.onHandleIntent( i );*/
   }
 
   public class DownloadServiceMock extends DownloadService {
@@ -77,7 +71,7 @@ public class FiledownloadTest {
     }
   }
 
-  //@Test
+  // @Test
   public void testDownloading() {
     Context context = RuntimeEnvironment.application.getApplicationContext();
 
@@ -149,5 +143,4 @@ public class FiledownloadTest {
       e.printStackTrace();
     }
   }
-
 }

@@ -11,9 +11,7 @@ import info.juanmendez.android.intentservice.service.download.DownloadService;
 import info.juanmendez.android.intentservice.service.magazine.MagazineListService;
 import javax.inject.Singleton;
 
-/**
- * Created by Juan on 8/1/2015.
- */
+/** Created by Juan on 8/1/2015. */
 @Singleton
 @Component(modules = {AppModule.class, AndroidInjectionModule.class, ActivityInjectorModule.class})
 public interface AppComponent extends AndroidInjector<MagazineApp> {

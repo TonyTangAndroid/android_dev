@@ -61,7 +61,7 @@ public class SQLBriteTest {
     briteDatase = sqlBrite.wrapDatabaseHelper(new SqlHelper(app));
   }
 
-  //@Test
+  // @Test
   public void testContentProvider() {
 
     ArrayList<Magazine> magazines = new ArrayList<Magazine>();
@@ -85,68 +85,77 @@ public class SQLBriteTest {
 
     Assert.assertEquals(result.getPath(), uri.getPath() + "/2");
 
-    Observable<SqlBrite.Query> queryObservable = briteContentResolver.createQuery(uri, new String[]
-            {SQLMagazine.ID, SQLMagazine.ISSUE,
-                SQLMagazine.TITLE,
-                SQLMagazine.LOCATION,
-                SQLMagazine.FILE_LOCATION,
-                SQLMagazine.DATETIME,
-                SQLMagazine.STATUS},
-        null,
-        null,
-        SQLMagazine.ISSUE + " desc", false);
+    Observable<SqlBrite.Query> queryObservable =
+        briteContentResolver.createQuery(
+            uri,
+            new String[] {
+              SQLMagazine.ID,
+              SQLMagazine.ISSUE,
+              SQLMagazine.TITLE,
+              SQLMagazine.LOCATION,
+              SQLMagazine.FILE_LOCATION,
+              SQLMagazine.DATETIME,
+              SQLMagazine.STATUS
+            },
+            null,
+            null,
+            SQLMagazine.ISSUE + " desc",
+            false);
 
     /**
-     * prints
-     * Magazine( issue: 2.23, location: /wherever/2.zip, title: null, file_location: null )
+     * prints Magazine( issue: 2.23, location: /wherever/2.zip, title: null, file_location: null )
      * Magazine( issue: 2.22, location: /wherever/1.zip, title: null, file_location: null )
      */
     queryObservable
-        .map(query -> {
-          ArrayList<Magazine> list = new ArrayList<>();
+        .map(
+            query -> {
+              ArrayList<Magazine> list = new ArrayList<>();
 
-          Cursor cursor = query.run();
-          while (cursor.moveToNext()) {
-            list.add(MagazineUtil.fromCursor(cursor));
-          }
+              Cursor cursor = query.run();
+              while (cursor.moveToNext()) {
+                list.add(MagazineUtil.fromCursor(cursor));
+              }
 
-          return list;
-        })
-        .subscribe(thoseMagazines -> {
-          for (Magazine m : thoseMagazines) {
-            Log.print(m.toString());
-          }
-        });
+              return list;
+            })
+        .subscribe(
+            thoseMagazines -> {
+              for (Magazine m : thoseMagazines) {
+                Log.print(m.toString());
+              }
+            });
   }
 
   @Test
   public void testDatabase() {
-    briteDatase.createQuery(SQLMagazine.TABLE, "SELECT * FROM " + SQLMagazine.TABLE, new String[]{})
-        .map(query -> {
-          ArrayList<Magazine> list = new ArrayList<>();
+    briteDatase
+        .createQuery(SQLMagazine.TABLE, "SELECT * FROM " + SQLMagazine.TABLE, new String[] {})
+        .map(
+            query -> {
+              ArrayList<Magazine> list = new ArrayList<>();
 
-          try {
-            Cursor cursor = query.run();
-            while (cursor.moveToNext()) {
-              list.add(MagazineUtil.fromCursor(cursor));
-            }
+              try {
+                Cursor cursor = query.run();
+                while (cursor.moveToNext()) {
+                  list.add(MagazineUtil.fromCursor(cursor));
+                }
 
-            cursor.close();
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
+                cursor.close();
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
 
-          return list;
-        })
-        .subscribe(thoseMagazines -> {
-
-          Log.print("================================");
-          Log.print("ON TABLE UPDATE, THEN ITERATE");
-          for (Magazine m : thoseMagazines) {
-            Log.print(m.toString());
-          }
-          Log.print("================================");
-        });
+              return list;
+            })
+        .subscribe(
+            thoseMagazines -> {
+              Log.print("================================");
+              Log.print("ON TABLE UPDATE, THEN ITERATE");
+              for (Magazine m : thoseMagazines) {
+                Log.print(m.toString());
+              }
+              Log.print("================================");
+            });
 
     ArrayList<Magazine> magazines = new ArrayList<Magazine>();
 

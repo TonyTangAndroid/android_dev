@@ -1,6 +1,5 @@
 package info.juanmendez.android.intentservice.model.adapter;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,19 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import rx.functions.Action1;
 
-/**
- * Created by Juan on 8/8/2015.
- */
+/** Created by Juan on 8/8/2015. */
 public class WebViewAdapter extends FragmentPagerAdapter implements Action1<List<MagazinePage>> {
 
   private final ArrayList<MagazinePage> list;
 
-
-  public WebViewAdapter(FragmentManager fragmentManager,
-      ArrayList<MagazinePage> list) {
+  public WebViewAdapter(FragmentManager fragmentManager, ArrayList<MagazinePage> list) {
     super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     this.list = list;
-
   }
 
   @Override

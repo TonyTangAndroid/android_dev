@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-
 import dagger.android.AndroidInjection;
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
-import org.apache.commons.io.IOUtils;
-
+import info.juanmendez.android.intentservice.BuildConfig;
+import info.juanmendez.android.intentservice.helper.MagazineUtil;
+import info.juanmendez.android.intentservice.helper.PageUtil;
+import info.juanmendez.android.intentservice.model.MagazineStatus;
+import info.juanmendez.android.intentservice.model.pojo.Magazine;
+import info.juanmendez.android.intentservice.model.pojo.Page;
+import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
+import info.juanmendez.android.intentservice.ui.MagazineApp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,239 +30,238 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-
 import javax.inject.Inject;
-
-import info.juanmendez.android.intentservice.BuildConfig;
-import info.juanmendez.android.intentservice.ui.MagazineApp;
-import info.juanmendez.android.intentservice.helper.MagazineUtil;
-import info.juanmendez.android.intentservice.helper.PageUtil;
-import info.juanmendez.android.intentservice.model.pojo.Magazine;
-import info.juanmendez.android.intentservice.model.MagazineStatus;
-import info.juanmendez.android.intentservice.model.pojo.Page;
-import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
+import org.apache.commons.io.IOUtils;
 
 /**
- * The DownloadService is in charge of downloading a zip and extracting
- * files to a specific directory.
+ * The DownloadService is in charge of downloading a zip and extracting files to a specific
+ * directory.
  *
- * It's going to also notify ContentProvider for latest zip downloaded, and files extracted.
+ * <p>It's going to also notify ContentProvider for latest zip downloaded, and files extracted.
  */
-public class DownloadService extends IntentService
-{
-    @Inject MagazineDispatcher dispatcher;
-    public DownloadService()
-    {
-        super("download-zip");
-    }
+public class DownloadService extends IntentService {
+  @Inject MagazineDispatcher dispatcher;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        AndroidInjection.inject(this);
-    }
+  public DownloadService() {
+    super("download-zip");
+  }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        ResultReceiver rec = intent.getParcelableExtra( "receiver" );
-        Bundle bundle = new Bundle();
-        bundle.putString( "message", "nothing happened");
-        int result = Activity.RESULT_CANCELED;
-        Magazine lastMagazine = dispatcher.getMagazine();
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    AndroidInjection.inject(this);
+  }
 
-        if( lastMagazine != null )
-        {
-            File downloads = new File( getFilesDir(), "magazines" );
-            downloads.mkdir();
-            File target = new File( downloads, "target.zip" );
+  @Override
+  protected void onHandleIntent(Intent intent) {
+    ResultReceiver rec = intent.getParcelableExtra("receiver");
+    Bundle bundle = new Bundle();
+    bundle.putString("message", "nothing happened");
+    int result = Activity.RESULT_CANCELED;
+    Magazine lastMagazine = dispatcher.getMagazine();
 
+    if (lastMagazine != null) {
+      File downloads = new File(getFilesDir(), "magazines");
+      downloads.mkdir();
+      File target = new File(downloads, "target.zip");
 
-            if( download( target, MagazineUtil.getMagazineURL(((MagazineApp) getApplication()).getLocalhost(), lastMagazine))){
-                File unzipDir = new File( getFilesDir(), "version_" + lastMagazine.getIssue());
+      if (download(
+          target,
+          MagazineUtil.getMagazineURL(
+              ((MagazineApp) getApplication()).getLocalhost(), lastMagazine))) {
+        File unzipDir = new File(getFilesDir(), "version_" + lastMagazine.getIssue());
 
-                if( unzipDir.exists() )
-                    unzipDir.delete();
+        if (unzipDir.exists()) unzipDir.delete();
 
-                unzipDir.mkdir();
+        unzipDir.mkdir();
 
-                int itemsModified = storeMagazine();
+        int itemsModified = storeMagazine();
 
-                if( itemsModified > 0 )
-                {
-                    List<Page> pages = unzip( target, unzipDir );
+        if (itemsModified > 0) {
+          List<Page> pages = unzip(target, unzipDir);
 
-                    if( pages.size() > 0  ){
+          if (pages.size() > 0) {
 
-                        storePages( pages );
-                        result = Activity.RESULT_OK;
+            storePages(pages);
+            result = Activity.RESULT_OK;
 
-                    }else{
+          } else {
 
-                        bundle.putString("message", "couldn't unzip");
-                    }
-                }
-                else{
-                    bundle.putString("message", "couldn't store first magazine " + lastMagazine.getIssue() );
-                }
-
-            }else{
-
-                bundle.putString("message", "couldn't download");
-            }
-
+            bundle.putString("message", "couldn't unzip");
+          }
+        } else {
+          bundle.putString("message", "couldn't store first magazine " + lastMagazine.getIssue());
         }
 
-        rec.send(result, bundle);
+      } else {
+
+        bundle.putString("message", "couldn't download");
+      }
     }
 
-    private Boolean download( File target, URL url ){
+    rec.send(result, bundle);
+  }
 
-        FileOutputStream fos = null;
-        InputStream is = null;
+  private Boolean download(File target, URL url) {
 
-        if( target.exists() )
-            target.delete();
+    FileOutputStream fos = null;
+    InputStream is = null;
 
-        try {
+    if (target.exists()) target.delete();
 
-            fos = new FileOutputStream( target.getPath() );
-            is = url.openStream();
-            url.openConnection();
-            IOUtils.copy(is, fos);
+    try {
 
-            IOUtils.closeQuietly(is);
-            IOUtils.closeQuietly(fos);
+      fos = new FileOutputStream(target.getPath());
+      is = url.openStream();
+      url.openConnection();
+      IOUtils.copy(is, fos);
 
-            return true;
+      IOUtils.closeQuietly(is);
+      IOUtils.closeQuietly(fos);
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      return true;
 
-        return false;
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
-    private List<Page> unzip( File zip, File directory ){
+    return false;
+  }
 
-        FileOutputStream fos = null;
-        InputStream is = null;
-        File entryDestination = null;
-        ZipFile zipFile = null;
-        Magazine lastMagazine = dispatcher.getMagazine();
-        List<Page> pages = new ArrayList<Page>();
+  private List<Page> unzip(File zip, File directory) {
 
-        //reading the zipEntry is appending the zip file name. We want to ignore that level.
-        String pattern = "\\w+\\/(.*)";
-        try{
-            zipFile = new ZipFile( zip );
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+    FileOutputStream fos = null;
+    InputStream is = null;
+    File entryDestination = null;
+    ZipFile zipFile = null;
+    Magazine lastMagazine = dispatcher.getMagazine();
+    List<Page> pages = new ArrayList<Page>();
 
-            while( entries.hasMoreElements()){
-                ZipEntry entry = entries.nextElement();
+    // reading the zipEntry is appending the zip file name. We want to ignore that level.
+    String pattern = "\\w+\\/(.*)";
+    try {
+      zipFile = new ZipFile(zip);
+      Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-                entryDestination = new File( directory, entry.getName().replaceAll( pattern, "$1") );
+      while (entries.hasMoreElements()) {
+        ZipEntry entry = entries.nextElement();
 
-                if( entry.isDirectory() ){
-                    entryDestination.mkdir();
-                }else{
-                    is = zipFile.getInputStream( entry );
-                    fos = new FileOutputStream( entryDestination );
+        entryDestination = new File(directory, entry.getName().replaceAll(pattern, "$1"));
 
-                    IOUtils.copy( is, fos );
-                    IOUtils.closeQuietly(is);
-                    IOUtils.closeQuietly( fos );
-                }
-            }
-            zipFile.close();
+        if (entry.isDirectory()) {
+          entryDestination.mkdir();
+        } else {
+          is = zipFile.getInputStream(entry);
+          fos = new FileOutputStream(entryDestination);
 
-            File[] listOfFiles = directory.listFiles();
-            File file;
-            Page page;
-
-            for( int i = 0; i < listOfFiles.length; i++ ){
-                file = listOfFiles[i];
-
-                if( !file.isDirectory()){
-                    page = new Page();
-                    page.setName( file.getName() );
-                    page.setPosition(i);
-                    page.setMagId(lastMagazine.getId());
-
-                    pages.add( page );
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ZipException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+          IOUtils.copy(is, fos);
+          IOUtils.closeQuietly(is);
+          IOUtils.closeQuietly(fos);
         }
+      }
+      zipFile.close();
 
-        return pages;
+      File[] listOfFiles = directory.listFiles();
+      File file;
+      Page page;
+
+      for (int i = 0; i < listOfFiles.length; i++) {
+        file = listOfFiles[i];
+
+        if (!file.isDirectory()) {
+          page = new Page();
+          page.setName(file.getName());
+          page.setPosition(i);
+          page.setMagId(lastMagazine.getId());
+
+          pages.add(page);
+        }
+      }
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (ZipException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
 
-    private int storeMagazine(){
+    return pages;
+  }
 
-        Magazine lastMagazine = dispatcher.getMagazine();
-        Magazine cloneMagazine = MagazineUtil.clone(lastMagazine);
-        cloneMagazine.setFileLocation(  "file://" + getFilesDir().getAbsolutePath() +  "/version_" + lastMagazine.getIssue()  );
-        cloneMagazine.setStatus( MagazineStatus.DOWNLOADED );
+  private int storeMagazine() {
 
-        MagazineApp app = ((MagazineApp) getApplication());
-        Uri magazineURI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".service.provider.MagazineProvider" + "/magazines/" + cloneMagazine.getId());
+    Magazine lastMagazine = dispatcher.getMagazine();
+    Magazine cloneMagazine = MagazineUtil.clone(lastMagazine);
+    cloneMagazine.setFileLocation(
+        "file://" + getFilesDir().getAbsolutePath() + "/version_" + lastMagazine.getIssue());
+    cloneMagazine.setStatus(MagazineStatus.DOWNLOADED);
 
-        ContentResolver cr = getContentResolver();
-        ContentValues c = MagazineUtil.toContentValues(cloneMagazine);
+    MagazineApp app = ((MagazineApp) getApplication());
+    Uri magazineURI =
+        Uri.parse(
+            "content://"
+                + BuildConfig.APPLICATION_ID
+                + ".service.provider.MagazineProvider"
+                + "/magazines/"
+                + cloneMagazine.getId());
 
+    ContentResolver cr = getContentResolver();
+    ContentValues c = MagazineUtil.toContentValues(cloneMagazine);
 
-        if( lastMagazine.getId() <= 0 )
-        {
-            Uri result = cr.insert( Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".service.provider.MagazineProvider" + "/magazines/"), c );
+    if (lastMagazine.getId() <= 0) {
+      Uri result =
+          cr.insert(
+              Uri.parse(
+                  "content://"
+                      + BuildConfig.APPLICATION_ID
+                      + ".service.provider.MagazineProvider"
+                      + "/magazines/"),
+              c);
 
-            if( MagazineProvider.uriMatcher.match(result) == MagazineProvider.SINGLE_MAGAZINE )
-            {
-                cloneMagazine.setId( Integer.parseInt(result.getLastPathSegment()));
-                MagazineUtil.overwrite(cloneMagazine, lastMagazine);
-                return 1;
-            }
-        }
-        else
-        {
-            int itemsModified = cr.update(magazineURI, c, null, null);
+      if (MagazineProvider.uriMatcher.match(result) == MagazineProvider.SINGLE_MAGAZINE) {
+        cloneMagazine.setId(Integer.parseInt(result.getLastPathSegment()));
+        MagazineUtil.overwrite(cloneMagazine, lastMagazine);
+        return 1;
+      }
+    } else {
+      int itemsModified = cr.update(magazineURI, c, null, null);
 
-            if( itemsModified > 0 )
-            {
-                MagazineUtil.overwrite(cloneMagazine, lastMagazine);
-            }
+      if (itemsModified > 0) {
+        MagazineUtil.overwrite(cloneMagazine, lastMagazine);
+      }
 
-            return itemsModified;
-        }
-
-        return 0;
+      return itemsModified;
     }
 
-    private void storePages( List<Page> pages ){
+    return 0;
+  }
 
-        MagazineApp app = ((MagazineApp) getApplication());
-        Uri pagesURI = Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".service.provider.MagazineProvider" + "/pages");
-        ContentResolver cr = getContentResolver();
-        ContentValues c;
+  private void storePages(List<Page> pages) {
 
-        for( Page page: pages ){
+    MagazineApp app = ((MagazineApp) getApplication());
+    Uri pagesURI =
+        Uri.parse(
+            "content://"
+                + BuildConfig.APPLICATION_ID
+                + ".service.provider.MagazineProvider"
+                + "/pages");
+    ContentResolver cr = getContentResolver();
+    ContentValues c;
 
-            c = PageUtil.toContentValues(page);
-            Uri result = cr.insert( pagesURI, c );
+    for (Page page : pages) {
 
-            if( result != null && MagazineProvider.uriMatcher.match(result) == MagazineProvider.SINGLE_PAGE  )
-            {
-                page.setId(Integer.parseInt(result.getLastPathSegment()));
-            }
-        }
+      c = PageUtil.toContentValues(page);
+      Uri result = cr.insert(pagesURI, c);
+
+      if (result != null
+          && MagazineProvider.uriMatcher.match(result) == MagazineProvider.SINGLE_PAGE) {
+        page.setId(Integer.parseInt(result.getLastPathSegment()));
+      }
     }
+  }
 }

@@ -11,9 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 import rx.functions.Action1;
 
-/**
- * Created by Juan on 8/1/2015.
- */
+/** Created by Juan on 8/1/2015. */
 @ActivityScope
 public class MagazineAdapter extends ArrayAdapter<Magazine> implements Action1<List<Magazine>> {
 

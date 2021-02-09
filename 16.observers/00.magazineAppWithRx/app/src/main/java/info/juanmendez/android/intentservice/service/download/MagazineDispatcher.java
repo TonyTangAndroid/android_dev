@@ -6,25 +6,22 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import rx.subjects.PublishSubject;
 
-/**
- * Created by Juan on 11/28/2015.
- */
+/** Created by Juan on 11/28/2015. */
 @Singleton
-public class MagazineDispatcher extends SubscriptionShell<Magazine>
-{
-    Magazine magazine = new Magazine();
+public class MagazineDispatcher extends SubscriptionShell<Magazine> {
+  Magazine magazine = new Magazine();
 
-    @Inject
-    public MagazineDispatcher(){
-        super(PublishSubject.create());
-    }
+  @Inject
+  public MagazineDispatcher() {
+    super(PublishSubject.create());
+  }
 
-    public Magazine getMagazine() {
-        return magazine;
-    }
+  public Magazine getMagazine() {
+    return magazine;
+  }
 
-    public void setMagazine(Magazine magazine) {
-        this.magazine = magazine;
-        subject.onNext( magazine );
-    }
+  public void setMagazine(Magazine magazine) {
+    this.magazine = magazine;
+    subject.onNext(magazine);
+  }
 }

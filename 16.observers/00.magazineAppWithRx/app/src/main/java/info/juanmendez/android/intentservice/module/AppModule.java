@@ -17,7 +17,6 @@ import javax.inject.Singleton;
 @Module
 public class AppModule {
 
-
   @Provides
   @Singleton
   MagazineDispatcher providesMagazineDispatcher() {

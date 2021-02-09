@@ -6,9 +6,7 @@ import info.juanmendez.android.intentservice.service.download.DownloadService;
 import info.juanmendez.android.intentservice.service.magazine.MagazineListService;
 import info.juanmendez.android.intentservice.ui.ListMagazinesActivity;
 
-/**
- * Created by Juan on 7/29/2015.
- */
+/** Created by Juan on 7/29/2015. */
 @Module
 public abstract class ActivityInjectorModule {
 
@@ -19,6 +17,7 @@ public abstract class ActivityInjectorModule {
   @ActivityScope
   @ContributesAndroidInjector
   abstract DownloadService DownloadService();
+
   @ActivityScope
   @ContributesAndroidInjector
   abstract MagazineListService magazineListService();

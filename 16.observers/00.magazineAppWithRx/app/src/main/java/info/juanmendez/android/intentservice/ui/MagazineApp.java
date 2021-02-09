@@ -3,14 +3,9 @@ package info.juanmendez.android.intentservice.ui;
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
 import info.juanmendez.android.intentservice.R;
-import info.juanmendez.android.intentservice.service.download.DownloadService;
-import info.juanmendez.android.intentservice.service.magazine.MagazineListService;
 
-/**
- * Created by Juan on 8/1/2015.
- */
+/** Created by Juan on 8/1/2015. */
 public class MagazineApp extends DaggerApplication {
-
 
   private AppComponent appComponent;
 
@@ -32,5 +27,4 @@ public class MagazineApp extends DaggerApplication {
   public void inject(MagazineRow magazineRow) {
     appComponent.inject(magazineRow);
   }
-
 }

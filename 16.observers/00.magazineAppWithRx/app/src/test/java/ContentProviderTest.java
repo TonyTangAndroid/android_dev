@@ -1,36 +1,36 @@
-//import static org.robolectric.Shadows.shadowOf;
+// import static org.robolectric.Shadows.shadowOf;
 //
-//import android.content.ContentResolver;
-//import android.content.ContentValues;
-//import android.content.pm.ProviderInfo;
-//import android.database.Cursor;
-//import android.database.sqlite.SQLiteException;
-//import android.net.Uri;
-//import info.juanmendez.android.intentservice.BuildConfig;
-//import info.juanmendez.android.intentservice.helper.MagazineUtil;
-//import info.juanmendez.android.intentservice.helper.PageUtil;
-//import info.juanmendez.android.intentservice.model.pojo.Magazine;
-//import info.juanmendez.android.intentservice.model.pojo.Page;
-//import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
-//import info.juanmendez.android.intentservice.service.provider.table.SQLMagazine;
-//import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
-//import info.juanmendez.android.intentservice.ui.MagazineApp;
-//import java.util.ArrayList;
-//import java.util.Date;
-//import junit.framework.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.robolectric.Robolectric;
-//import org.robolectric.RobolectricTestRunner;
-//import org.robolectric.RuntimeEnvironment;
-//import org.robolectric.annotation.Config;
-//import org.robolectric.shadows.ShadowContentResolver;
-//import org.robolectric.shadows.ShadowLog;
+// import android.content.ContentResolver;
+// import android.content.ContentValues;
+// import android.content.pm.ProviderInfo;
+// import android.database.Cursor;
+// import android.database.sqlite.SQLiteException;
+// import android.net.Uri;
+// import info.juanmendez.android.intentservice.BuildConfig;
+// import info.juanmendez.android.intentservice.helper.MagazineUtil;
+// import info.juanmendez.android.intentservice.helper.PageUtil;
+// import info.juanmendez.android.intentservice.model.pojo.Magazine;
+// import info.juanmendez.android.intentservice.model.pojo.Page;
+// import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
+// import info.juanmendez.android.intentservice.service.provider.table.SQLMagazine;
+// import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
+// import info.juanmendez.android.intentservice.ui.MagazineApp;
+// import java.util.ArrayList;
+// import java.util.Date;
+// import junit.framework.Assert;
+// import org.junit.Before;
+// import org.junit.Test;
+// import org.junit.runner.RunWith;
+// import org.robolectric.Robolectric;
+// import org.robolectric.RobolectricTestRunner;
+// import org.robolectric.RuntimeEnvironment;
+// import org.robolectric.annotation.Config;
+// import org.robolectric.shadows.ShadowContentResolver;
+// import org.robolectric.shadows.ShadowLog;
 //
-//@RunWith(RobolectricTestRunner.class)
-//public class ContentProviderTest
-//{
+// @RunWith(RobolectricTestRunner.class)
+// public class ContentProviderTest
+// {
 //    private ContentResolver resolver;
 //    private ShadowContentResolver shadowResolver;
 //    private MagazineProvider provider;
@@ -78,7 +78,8 @@
 //        Assert.assertEquals(result.getPath(), uri.getPath() + "/2");
 //
 //        Cursor query = resolver.query(uri,
-//                new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.TITLE, SQLMagazine.LOCATION,
+//                new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.TITLE,
+// SQLMagazine.LOCATION,
 //                        SQLMagazine.FILE_LOCATION,
 //                        SQLMagazine.DATETIME,
 //                        SQLMagazine.STATUS},
@@ -134,7 +135,8 @@
 //
 //                if( result != null )
 //                {
-//                    Assert.assertTrue( "path is valid " + result.getPath(), MagazineProvider.uriMatcher.match( result ) == MagazineProvider.SINGLE_PAGE );
+//                    Assert.assertTrue( "path is valid " + result.getPath(),
+// MagazineProvider.uriMatcher.match( result ) == MagazineProvider.SINGLE_PAGE );
 //                }
 //
 //            } catch (SQLiteException e) {
@@ -164,7 +166,8 @@
 //    public void testLimit(){
 //        Uri uri = Uri.parse("content://" + MagazineProvider.AUTHORITY + "/magazines/limit/" + 1 );
 //        Cursor query = resolver.query(uri,
-//                new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.DATETIME, SQLMagazine.LOCATION},
+//                new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.DATETIME,
+// SQLMagazine.LOCATION},
 //                null,
 //                null,
 //                SQLMagazine.ISSUE + " desc" );
@@ -189,7 +192,8 @@
 //        if( lastMagazineID >= 0 ){
 //
 //            Cursor query = shadowResolver.query(magazineURI,
-//                    new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.DATETIME, SQLMagazine.LOCATION},
+//                    new String[]{SQLMagazine.ID, SQLMagazine.ISSUE, SQLMagazine.DATETIME,
+// SQLMagazine.LOCATION},
 //                    null,
 //                    null,
 //                    null );
@@ -222,4 +226,4 @@
 //        }
 //
 //    }
-//}
+// }
