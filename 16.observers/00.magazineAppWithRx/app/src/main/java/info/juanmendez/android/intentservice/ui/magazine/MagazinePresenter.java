@@ -5,20 +5,15 @@ import android.net.Uri;
 import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.sqlbrite.BriteContentResolver;
 import com.squareup.sqlbrite.SqlBrite;
-
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-
 import info.juanmendez.android.intentservice.BuildConfig;
-import info.juanmendez.android.intentservice.helper.MVPUtils;
 import info.juanmendez.android.intentservice.helper.PageUtil;
 import info.juanmendez.android.intentservice.model.adapter.WebViewAdapter;
 import info.juanmendez.android.intentservice.model.pojo.Magazine;
-import info.juanmendez.android.intentservice.model.pojo.Page;
 import info.juanmendez.android.intentservice.service.download.MagazineDispatcher;
 import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
 import info.juanmendez.android.intentservice.ui.MagazinePage;
+import java.util.ArrayList;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,7 +21,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Juan on 8/20/2015.
  */
-public class MagazinePresenter implements IMagazinePresenter {
+public class MagazinePresenter  {
 
     AppCompatActivity activity;
 
@@ -41,25 +36,18 @@ public class MagazinePresenter implements IMagazinePresenter {
     Observable<SqlBrite.Query> queryObservable;
 
     WebViewAdapter adapter;
-    IMagazineView view;
 
     public MagazinePresenter(AppCompatActivity activity ){
         this.activity = activity;
-        view = MVPUtils.getView( activity, IMagazineView.class );
-        view.inject(this);
 
-        adapter = new WebViewAdapter( activity );
-        view.setAdapter(adapter);
     }
 
-    @Override
     public void pause() {
 
         if( queryObservable != null )
         queryObservable.unsubscribeOn( AndroidSchedulers.mainThread() );
     }
 
-    @Override
     public void resume() {
         Magazine mag =  dispatcher.getMagazine();
 

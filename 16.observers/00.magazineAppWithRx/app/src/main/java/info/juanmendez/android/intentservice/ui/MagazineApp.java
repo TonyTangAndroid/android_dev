@@ -33,13 +33,4 @@ public class MagazineApp extends DaggerApplication {
     appComponent.inject(magazineRow);
   }
 
-  public void inject(DownloadService downloadService) {
-    appComponent.inject(downloadService);
-
-  }
-
-  public void inject(MagazineListService magazineListService) {
-    appComponent.inject(magazineListService);
-
-  }
 }

@@ -9,18 +9,19 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdd75f09-38c3-40d1-9e7d-ea248811410b" name="Default" comment="Prepare to migrate to Dagger 2">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityScope.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ListMagazinesActivityModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/AppComponent.java" afterDir="false" />
+    <list default="true" id="cdd75f09-38c3-40d1-9e7d-ea248811410b" name="Default" comment="Migrate to Dagger 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityInjectorModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/AppModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/AppModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/proxy/DownloadProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/proxy/DownloadProxy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/ListMagazinesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/ListMagazinesActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/model/adapter/WebViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/model/adapter/WebViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityInjectorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/module/ActivityInjectorModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/download/DownloadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/download/DownloadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/download/MagazineDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/download/MagazineDispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/magazine/MagazineListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/service/magazine/MagazineListService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/MagazineRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/IMagazinePresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/IMagazineView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/MagazinePresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/info/juanmendez/android/intentservice/ui/magazine/MagazinePresenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,7 @@
       <recent name="info.juanmendez.android.intentservice.ui" />
     </key>
   </component>
-  <component name="RunManager" selected="Android JUnit.SQLBriteTest">
+  <component name="RunManager" selected="Android JUnit.RegexTest">
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -109,6 +110,17 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MagazineTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="00.magazineAppWithRx.app" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MagazineTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RegexTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <module name="00.magazineAppWithRx.app" />
       <option name="PACKAGE_NAME" value="" />
@@ -124,17 +136,6 @@
       <module name="00.magazineAppWithRx.app" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="SQLBriteTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestDownloadProxy" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <module name="00.magazineAppWithRx.app" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="TestDownloadProxy" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -259,18 +260,18 @@
     <list>
       <item itemvalue="Android App.app" />
       <item itemvalue="Android JUnit.RegexTest" />
-      <item itemvalue="Android JUnit.TestDownloadProxy" />
       <item itemvalue="Android JUnit.ContentProviderTest" />
       <item itemvalue="Android JUnit.FiledownloadTest" />
       <item itemvalue="Android JUnit.SQLBriteTest" />
+      <item itemvalue="Android JUnit.MagazineTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Android JUnit.RegexTest" />
+        <item itemvalue="Android JUnit.MagazineTest" />
         <item itemvalue="Android JUnit.SQLBriteTest" />
         <item itemvalue="Android JUnit.FiledownloadTest" />
-        <item itemvalue="Android JUnit.RegexTest" />
         <item itemvalue="Android JUnit.ContentProviderTest" />
-        <item itemvalue="Android JUnit.TestDownloadProxy" />
       </list>
     </recent_temporary>
   </component>
@@ -299,7 +300,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612778448570</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Migrate to Dagger 2">
+      <created>1612779474746</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1612779474746</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -315,7 +323,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Migrate to AndroidX" />
     <MESSAGE value="Prepare to migrate to Dagger 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Prepare to migrate to Dagger 2" />
+    <MESSAGE value="Migrate to Dagger 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Migrate to Dagger 2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="805" y="459" key="#PSD" timestamp="1612778260349">
@@ -326,42 +335,61 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="1093" y="433" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779415867" />
-    <state x="759" y="315" key="CommitChangelistDialog2" timestamp="1612778448422">
+    <state x="933" y="188" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1612840083000">
+      <screen x="48" y="23" width="2512" height="1417" />
+    </state>
+    <state x="933" y="188" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840083000" />
+    <state x="759" y="315" key="CommitChangelistDialog2" timestamp="1612779474574">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="759" y="315" key="CommitChangelistDialog2/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778448422" />
+    <state x="759" y="315" key="CommitChangelistDialog2/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779474574" />
     <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog" timestamp="1612779463517">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779463517" />
     <state x="53" y="78" width="2406" height="1261" key="DiffContextDialog/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612778272793" />
-    <state width="2518" height="424" key="GridCell.Tab.0.bottom" timestamp="1612779421638">
+    <state width="2470" height="416" key="GridCell.Tab.0.bottom" timestamp="1612840696639">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="424" key="GridCell.Tab.0.bottom/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779421638" />
-    <state width="2518" height="424" key="GridCell.Tab.0.center" timestamp="1612779421636">
+    <state width="2470" height="416" key="GridCell.Tab.0.bottom/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612840696639" />
+    <state width="2470" height="416" key="GridCell.Tab.0.bottom/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840642287" />
+    <state width="2470" height="416" key="GridCell.Tab.0.center" timestamp="1612840696638">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="424" key="GridCell.Tab.0.center/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779421636" />
-    <state width="2518" height="424" key="GridCell.Tab.0.left" timestamp="1612779421635">
+    <state width="2470" height="416" key="GridCell.Tab.0.center/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612840696638" />
+    <state width="2470" height="416" key="GridCell.Tab.0.center/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840642286" />
+    <state width="2470" height="416" key="GridCell.Tab.0.left" timestamp="1612840696637">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="424" key="GridCell.Tab.0.left/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779421635" />
-    <state width="2518" height="424" key="GridCell.Tab.0.right" timestamp="1612779421637">
+    <state width="2470" height="416" key="GridCell.Tab.0.left/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612840696637" />
+    <state width="2470" height="416" key="GridCell.Tab.0.left/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840642285" />
+    <state width="2470" height="416" key="GridCell.Tab.0.right" timestamp="1612840696639">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="424" key="GridCell.Tab.0.right/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779421637" />
-    <state x="972" y="475" width="615" height="490" key="find.popup" timestamp="1612778062986">
-      <screen x="0" y="0" width="2560" height="1440" />
+    <state width="2470" height="416" key="GridCell.Tab.0.right/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612840696639" />
+    <state width="2470" height="416" key="GridCell.Tab.0.right/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840642287" />
+    <state x="912" y="476" key="Vcs.Push.Dialog.v2" timestamp="1612839918677">
+      <screen x="48" y="23" width="2512" height="1417" />
+    </state>
+    <state x="880" y="460" key="Vcs.Push.Dialog.v2/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612779495524" />
+    <state x="912" y="476" key="Vcs.Push.Dialog.v2/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612839918677" />
+    <state x="1002" y="490" width="1245" height="490" key="find.popup" timestamp="1612840485318">
+      <screen x="48" y="23" width="2512" height="1417" />
     </state>
     <state x="972" y="475" width="615" height="490" key="find.popup/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778062986" />
+    <state x="1002" y="490" width="1245" height="490" key="find.popup/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840485318" />
     <state x="940" y="515" key="git4idea.merge.GitPullDialog" timestamp="1612777779481">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="940" y="515" key="git4idea.merge.GitPullDialog/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612777779481" />
-    <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1612778976463">
-      <screen x="0" y="0" width="2560" height="1440" />
+    <state x="1073" y="504" key="refactoring.ChangeSignatureDialog" timestamp="1612840063182">
+      <screen x="48" y="23" width="2512" height="1417" />
+    </state>
+    <state x="1073" y="504" key="refactoring.ChangeSignatureDialog/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840063182" />
+    <state x="975" y="349" width="670" height="666" key="search.everywhere.popup" timestamp="1612840139058">
+      <screen x="48" y="23" width="2512" height="1417" />
     </state>
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup/0.0.2560.1440/600.1440.1440.900@0.0.2560.1440" timestamp="1612778976463" />
+    <state x="975" y="349" width="670" height="666" key="search.everywhere.popup/48.23.2512.1417/600.1463.1440.877@48.23.2512.1417" timestamp="1612840139058" />
   </component>
 </project>

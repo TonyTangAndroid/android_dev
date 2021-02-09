@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -44,19 +47,20 @@ import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
  */
 public class DownloadService extends IntentService
 {
-    @Inject
-    MagazineDispatcher dispatcher;
+    @Inject MagazineDispatcher dispatcher;
     public DownloadService()
     {
         super("download-zip");
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        AndroidInjection.inject(this);
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
-
-        MagazineApp app = ((MagazineApp) getApplication());
-        app.inject(this);
-
         ResultReceiver rec = intent.getParcelableExtra( "receiver" );
         Bundle bundle = new Bundle();
         bundle.putString( "message", "nothing happened");
@@ -70,7 +74,7 @@ public class DownloadService extends IntentService
             File target = new File( downloads, "target.zip" );
 
 
-            if( download( target, MagazineUtil.getMagazineURL(app.getLocalhost(), lastMagazine))){
+            if( download( target, MagazineUtil.getMagazineURL(((MagazineApp) getApplication()).getLocalhost(), lastMagazine))){
                 File unzipDir = new File( getFilesDir(), "version_" + lastMagazine.getIssue());
 
                 if( unzipDir.exists() )

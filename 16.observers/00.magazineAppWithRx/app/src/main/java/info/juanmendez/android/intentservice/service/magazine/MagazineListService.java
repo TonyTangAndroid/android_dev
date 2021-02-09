@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import androidx.core.app.NotificationCompat;
+import dagger.android.AndroidInjection;
+import dagger.android.DaggerApplication;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -49,12 +51,16 @@ public class MagazineListService extends IntentService
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        AndroidInjection.inject(this);
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
 
-        MagazineApp app = ((MagazineApp) getApplication());
-        app.inject(this);
-
         Uri uri = Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".service.provider.MagazineProvider" + "/magazines");
+        MagazineApp app = (MagazineApp) getApplication();
         ContentResolver resolver = app.getContentResolver();
         RetroService service = MagazineService.getService(app.getLocalhost());
         ResultReceiver rec = intent.getParcelableExtra("receiver");

@@ -51,10 +51,8 @@ public class MagazineRow extends LinearLayout implements View.OnClickListener {
     }
 
     public void setupChildren(){
-
-        issueTextView = (TextView) findViewById(R.id.issueTextView);
-        imageButton = (Button) findViewById(R.id.imageButton);
-
+        issueTextView = findViewById(R.id.issueTextView);
+        imageButton = findViewById(R.id.imageButton);
         app = (MagazineApp) getContext().getApplicationContext();
         app.inject( this );
     }

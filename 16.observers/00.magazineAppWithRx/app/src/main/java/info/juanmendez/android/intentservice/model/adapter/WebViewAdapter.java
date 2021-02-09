@@ -1,18 +1,13 @@
 package info.juanmendez.android.intentservice.model.adapter;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import info.juanmendez.android.intentservice.ui.MagazinePage;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import info.juanmendez.android.intentservice.helper.MVPUtils;
-import info.juanmendez.android.intentservice.service.download.MagazineDispatcher;
-import info.juanmendez.android.intentservice.ui.MagazinePage;
-import info.juanmendez.android.intentservice.ui.magazine.IMagazineView;
 import rx.functions.Action1;
 
 /**
@@ -20,35 +15,31 @@ import rx.functions.Action1;
  */
 public class WebViewAdapter extends FragmentPagerAdapter implements Action1<List<MagazinePage>> {
 
-    @Inject
-    ArrayList<MagazinePage> magazinePages;
-    AppCompatActivity activity;
+  private final ArrayList<MagazinePage> list;
 
-    @Inject
-    MagazineDispatcher dispatcher;
 
-    public WebViewAdapter( AppCompatActivity activity) {
-        super(activity.getSupportFragmentManager());
+  public WebViewAdapter(FragmentManager fragmentManager,
+      ArrayList<MagazinePage> list) {
+    super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    this.list = list;
 
-        this.activity = activity;
-        MVPUtils.getView(activity, IMagazineView.class).inject(this);
-    }
+  }
 
-    @Override
-    public int getCount() {
-        return magazinePages.size();
-    }
+  @Override
+  public int getCount() {
+    return list.size();
+  }
 
-    @Override
-    public Fragment getItem(int position) {
+  @NonNull
+  @Override
+  public Fragment getItem(int position) {
+    return list.get(position);
+  }
 
-        return magazinePages.get(position);
-    }
-
-    @Override
-    public void call(List<MagazinePage> incomingPages ) {
-        magazinePages.clear();
-        magazinePages.addAll( incomingPages );
-        notifyDataSetChanged();
-    }
+  @Override
+  public void call(List<MagazinePage> list) {
+    this.list.clear();
+    this.list.addAll(list);
+    notifyDataSetChanged();
+  }
 }
