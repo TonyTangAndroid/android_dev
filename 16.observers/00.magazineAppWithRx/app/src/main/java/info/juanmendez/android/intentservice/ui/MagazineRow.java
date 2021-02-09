@@ -27,7 +27,8 @@ public class MagazineRow extends LinearLayout implements View.OnClickListener {
   Button imageButton;
   Magazine magazine;
 
-  @Inject MagazineDispatcher dispatcher;
+  @Inject
+  MagazineDispatcher dispatcher;
 
   MagazineApp app;
 
@@ -41,7 +42,6 @@ public class MagazineRow extends LinearLayout implements View.OnClickListener {
 
   public MagazineRow(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
-
     LayoutInflater.from(context).inflate(R.layout.magazine_row, this, true);
     setupChildren();
   }
@@ -64,9 +64,7 @@ public class MagazineRow extends LinearLayout implements View.OnClickListener {
   }
 
   public static MagazineRow inflate(ViewGroup parent) {
-
-    MagazineRow repoRow = new MagazineRow(parent.getContext());
-    return repoRow;
+    return new MagazineRow(parent.getContext());
   }
 
   @Override

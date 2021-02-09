@@ -55,8 +55,6 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
 
   private final MagazineNotificationSubject magazineNotificationSubject;
 
-  private final SqlBrite sqlBrite;
-
   Subscription magazineSubscription;
   Subscription notificationSubscription;
 
@@ -75,7 +73,6 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
       ArrayList<Magazine> magazines,
       MagazineDispatcher magazineDispatcher,
       MagazineNotificationSubject magazineNotificationSubject,
-      SqlBrite sqlBrite,
       BriteContentResolver briteContentResolver,
       IListMagazinesView view) {
     this.activity = activity;
@@ -86,7 +83,6 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
     this.magazines = magazines;
     this.magazineDispatcher = magazineDispatcher;
     this.magazineNotificationSubject = magazineNotificationSubject;
-    this.sqlBrite = sqlBrite;
     this.briteContentResolver = briteContentResolver;
     this.view = view;
   }
@@ -114,9 +110,9 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
               if (magazinesNotification.getResultCode() == Activity.RESULT_OK
                   && log.getState() == Log.Integer.DIRTY) {
                 Toast.makeText(
-                        activity,
-                        "New magazines to download! " + magazinesNotification.getMagazines().size(),
-                        Toast.LENGTH_LONG)
+                    activity,
+                    "New magazines to download! " + magazinesNotification.getMagazines().size(),
+                    Toast.LENGTH_LONG)
                     .show();
                 startLoader();
               }
@@ -133,7 +129,9 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
     magazineNotificationSubject.unsubscribe(notificationSubscription);
     networkReceiver.unregister();
 
-    if (queryObservable != null) queryObservable.unsubscribeOn(AndroidSchedulers.mainThread());
+    if (queryObservable != null) {
+      queryObservable.unsubscribeOn(AndroidSchedulers.mainThread());
+    }
   }
 
   @Override
@@ -173,14 +171,14 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
     queryObservable =
         briteContentResolver.createQuery(
             uri,
-            new String[] {
-              SQLMagazine.ID,
-              SQLMagazine.ISSUE,
-              SQLMagazine.TITLE,
-              SQLMagazine.LOCATION,
-              SQLMagazine.FILE_LOCATION,
-              SQLMagazine.DATETIME,
-              SQLMagazine.STATUS
+            new String[]{
+                SQLMagazine.ID,
+                SQLMagazine.ISSUE,
+                SQLMagazine.TITLE,
+                SQLMagazine.LOCATION,
+                SQLMagazine.FILE_LOCATION,
+                SQLMagazine.DATETIME,
+                SQLMagazine.STATUS
             },
             null,
             null,

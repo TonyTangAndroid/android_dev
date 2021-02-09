@@ -18,12 +18,10 @@ import javax.inject.Inject;
  */
 @ActivityScope
 public class DownloadProxy extends ResultReceiver {
-  protected UiCallback callback;
-  Activity activity;
 
-  public DownloadProxy() {
-    super(new Handler());
-  }
+  private final Activity activity;
+
+  protected UiCallback callback;
 
   @Inject
   public DownloadProxy(Activity activity) {
@@ -40,7 +38,8 @@ public class DownloadProxy extends ResultReceiver {
   }
 
   public interface UiCallback {
-    public void onDownloadResult(int resultCode);
+
+    void onDownloadResult(int resultCode);
   }
 
   @Override

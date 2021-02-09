@@ -31,14 +31,4 @@ public class MagazineService {
     return restAdapter.create(RetroService.class);
   }
 
-  static class MyErrorHandler implements ErrorHandler {
-    @Override
-    public Throwable handleError(RetrofitError cause) {
-      Response r = cause.getResponse();
-      if (r != null && r.getStatus() == 401) {
-        return new Exception("Unathorized cause");
-      }
-      return cause;
-    }
-  }
 }

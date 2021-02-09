@@ -32,7 +32,7 @@ public class AppModule {
   @Provides
   @Singleton
   ArrayList<MagazinePage> providesPages() {
-    return new ArrayList<MagazinePage>();
+    return new ArrayList<>();
   }
 
   @Provides

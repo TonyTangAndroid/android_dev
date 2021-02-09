@@ -1,11 +1,11 @@
 package info.juanmendez.android.intentservice.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -15,26 +15,24 @@ import androidx.fragment.app.Fragment;
  * @see <a href="http://www.juanmendez.info/2015/09/webviewfragment-which-supports.html">details</a>
  */
 public class WebViewFragment extends Fragment {
-  private WebView mWebView;
+  private WebView webView;
   private boolean mIsWebViewAvailable;
   private boolean mRotated = false;
 
   @Override
-  public View onCreateView(
-      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView( @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     setRetainInstance(true);
 
-    if (mWebView == null) {
-      mWebView = new WebView(getActivity());
+    if (webView == null) {
+      webView = new WebView(getActivity());
     }
 
-    return mWebView;
+    return webView;
   }
 
   /**
    * let us know if the webView has been rotated.
    *
-   * @return
    */
   public boolean rotated() {
     return mRotated;
@@ -45,7 +43,7 @@ public class WebViewFragment extends Fragment {
   public void onPause() {
     super.onPause();
 
-    if (honeyOrHigher()) mWebView.onPause();
+    webView.onPause();
 
     mRotated = true;
   }
@@ -53,14 +51,8 @@ public class WebViewFragment extends Fragment {
   /** Called when the fragment is no longer resumed. Pauses the WebView. */
   @Override
   public void onResume() {
-
-    if (honeyOrHigher()) mWebView.onResume();
-
+    webView.onResume();
     super.onResume();
-  }
-
-  private boolean honeyOrHigher() {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
   }
 
   /**
@@ -71,10 +63,10 @@ public class WebViewFragment extends Fragment {
   public void onDestroyView() {
     mIsWebViewAvailable = false;
 
-    if (mWebView != null) {
-      ViewGroup parentViewGroup = (ViewGroup) mWebView.getParent();
+    if (webView != null) {
+      ViewGroup parentViewGroup = (ViewGroup) webView.getParent();
       if (parentViewGroup != null) {
-        parentViewGroup.removeView(mWebView);
+        parentViewGroup.removeView(webView);
       }
     }
 
@@ -84,15 +76,15 @@ public class WebViewFragment extends Fragment {
   /** Called when the fragment is no longer in use. Destroys the internal state of the WebView. */
   @Override
   public void onDestroy() {
-    if (mWebView != null) {
-      mWebView.destroy();
-      mWebView = null;
+    if (webView != null) {
+      webView.destroy();
+      webView = null;
     }
     super.onDestroy();
   }
 
   /** Gets the WebView. */
   public WebView getWebView() {
-    return mIsWebViewAvailable ? mWebView : null;
+    return mIsWebViewAvailable ? webView : null;
   }
 }

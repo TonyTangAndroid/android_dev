@@ -2,7 +2,6 @@ package info.juanmendez.android.intentservice.ui.magazine;
 
 import android.database.Cursor;
 import android.net.Uri;
-import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.sqlbrite.BriteContentResolver;
 import com.squareup.sqlbrite.SqlBrite;
 import info.juanmendez.android.intentservice.BuildConfig;
@@ -13,14 +12,15 @@ import info.juanmendez.android.intentservice.service.download.MagazineDispatcher
 import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
 import info.juanmendez.android.intentservice.ui.MagazinePage;
 import java.util.ArrayList;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/** Created by Juan on 8/20/2015. */
+/**
+ * Created by Juan on 8/20/2015.
+ */
 public class MagazinePresenter {
-
-  private final AppCompatActivity activity;
 
   private final ArrayList<MagazinePage> pageList;
 
@@ -30,30 +30,33 @@ public class MagazinePresenter {
 
   Observable<SqlBrite.Query> queryObservable;
 
-  WebViewAdapter adapter;
+  private final WebViewAdapter adapter;
 
+  @Inject
   public MagazinePresenter(
-      AppCompatActivity activity,
       ArrayList<MagazinePage> pageList,
       MagazineDispatcher dispatcher,
-      BriteContentResolver briteContentResolver) {
-    this.activity = activity;
-
+      BriteContentResolver briteContentResolver,
+      WebViewAdapter adapter) {
     this.pageList = pageList;
     this.dispatcher = dispatcher;
     this.briteContentResolver = briteContentResolver;
+    this.adapter = adapter;
   }
 
   public void pause() {
-
-    if (queryObservable != null) queryObservable.unsubscribeOn(AndroidSchedulers.mainThread());
+    if (queryObservable != null) {
+      queryObservable.unsubscribeOn(AndroidSchedulers.mainThread());
+    }
   }
 
   public void resume() {
     Magazine mag = dispatcher.getMagazine();
-
-    if (mag.getId() > 0 && pageList.size() == 0) startLoader(mag);
-    else adapter.notifyDataSetChanged();
+    if (mag.getId() > 0 && pageList.size() == 0) {
+      startLoader(mag);
+    } else {
+      adapter.notifyDataSetChanged();
+    }
   }
 
   private void startLoader(Magazine magazine) {
@@ -64,9 +67,9 @@ public class MagazinePresenter {
     queryObservable =
         briteContentResolver.createQuery(
             uri,
-            new String[] {SQLPage.ID, SQLPage.POSITION, SQLPage.NAME, SQLPage.MAG_ID},
+            new String[]{SQLPage.ID, SQLPage.POSITION, SQLPage.NAME, SQLPage.MAG_ID},
             SQLPage.MAG_ID + " = ?",
-            new String[] {Integer.toString(magazine.getId())},
+            new String[]{Integer.toString(magazine.getId())},
             null,
             false);
 

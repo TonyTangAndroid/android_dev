@@ -15,22 +15,22 @@ import rx.functions.Action1;
 @ActivityScope
 public class MagazineAdapter extends ArrayAdapter<Magazine> implements Action1<List<Magazine>> {
 
-  private final List<Magazine> magazines;
+  private final List<Magazine> list;
 
   @Inject
   public MagazineAdapter(Activity context, List<Magazine> list) {
     super(context, 0, list);
-    magazines = list;
+    this.list = list;
   }
 
   @Override
   public Magazine getItem(int position) {
-    return magazines.get(position);
+    return list.get(position);
   }
 
   @Override
   public int getPosition(Magazine item) {
-    return magazines.indexOf(item);
+    return list.indexOf(item);
   }
 
   @Override
@@ -50,14 +50,14 @@ public class MagazineAdapter extends ArrayAdapter<Magazine> implements Action1<L
 
   @Override
   public int getCount() {
-    return magazines.size();
+    return list.size();
   }
 
   @Override
   public void call(List<Magazine> list) {
 
-    magazines.clear();
-    magazines.addAll(list);
+    this.list.clear();
+    this.list.addAll(list);
     this.notifyDataSetChanged();
   }
 }

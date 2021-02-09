@@ -7,13 +7,17 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import info.juanmendez.android.intentservice.ui.MagazinePage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import rx.functions.Action1;
 
-/** Created by Juan on 8/8/2015. */
+/**
+ * Created by Juan on 8/8/2015.
+ */
 public class WebViewAdapter extends FragmentPagerAdapter implements Action1<List<MagazinePage>> {
 
   private final ArrayList<MagazinePage> list;
 
+  @Inject
   public WebViewAdapter(FragmentManager fragmentManager, ArrayList<MagazinePage> list) {
     super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     this.list = list;

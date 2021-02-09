@@ -15,22 +15,24 @@ import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesView;
 import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresenter;
 import javax.inject.Inject;
 
-/** Created by Juan on 7/29/2015. */
+/**
+ * Created by Juan on 7/29/2015.
+ */
 public class ListMagazinesActivity extends DaggerAppCompatActivity implements IListMagazinesView {
 
   ListView list;
-  MagazineApp app;
   Button noNetworkButton;
-  @Inject MagazineAdapter adapter;
-  @Inject ListMagazinesPresenter presenter;
+
+  @Inject
+  MagazineAdapter adapter;
+  @Inject
+  ListMagazinesPresenter presenter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
-
-    noNetworkButton = (Button) findViewById(R.id.noNetworkButton);
-
+    noNetworkButton = findViewById(R.id.noNetworkButton);
     noNetworkButton.setOnClickListener(
         v -> {
           if (NetworkUtil.isConnected(ListMagazinesActivity.this)) {
@@ -46,7 +48,6 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
     list = findViewById(R.id.list);
     list.setAdapter(adapter);
 
-    app = (MagazineApp) getApplication();
   }
 
   @Override
@@ -72,7 +73,8 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
   }
 
   @Override
-  public void onMagazineList() {}
+  public void onMagazineList() {
+  }
 
   @Override
   public void onResume() {
@@ -88,9 +90,7 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
 
   @Override
   public void onNetworkStatus(Boolean connected, String type) {
-
     if (connected) {
-
       if (noNetworkButton.getVisibility() == View.VISIBLE) {
         noNetworkButton.setText(getString(R.string.error_network_refresh));
       }

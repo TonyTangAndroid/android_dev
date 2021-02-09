@@ -38,9 +38,6 @@ public class SubscriptionShell<T> {
   }
 
   public void nextOnMain(T t) {
-    mainThread.post(
-        () -> {
-          subject.onNext(t);
-        });
+    mainThread.post(() -> subject.onNext(t));
   }
 }
