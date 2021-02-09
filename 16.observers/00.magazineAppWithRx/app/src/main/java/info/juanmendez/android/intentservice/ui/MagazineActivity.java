@@ -2,15 +2,11 @@ package info.juanmendez.android.intentservice.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import dagger.android.support.DaggerAppCompatActivity;
 import info.juanmendez.android.intentservice.R;
-import info.juanmendez.android.intentservice.helper.MVPUtils;
 import info.juanmendez.android.intentservice.model.adapter.WebViewAdapter;
 import info.juanmendez.android.intentservice.ui.magazine.MagazinePresenter;
 import javax.inject.Inject;
@@ -28,8 +24,7 @@ public class MagazineActivity extends DaggerAppCompatActivity     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_magazine);
         viewPager = findViewById(R.id.pager);
-        presenter = new MagazinePresenter(this);
-        viewPager.setAdapter(adapter);
+         viewPager.setAdapter(adapter);
 
     }
 

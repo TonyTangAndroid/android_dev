@@ -1,63 +1,65 @@
 package info.juanmendez.android.intentservice.model.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import info.juanmendez.android.intentservice.model.pojo.Magazine;
+import info.juanmendez.android.intentservice.module.ActivityScope;
 import info.juanmendez.android.intentservice.ui.MagazineRow;
+import java.util.List;
+import javax.inject.Inject;
 import rx.functions.Action1;
 
 /**
  * Created by Juan on 8/1/2015.
  */
-public class MagazineAdapter extends ArrayAdapter<Magazine> implements Action1<List<Magazine>>
-{
-    List<Magazine> magazines = new ArrayList<Magazine>();
-    public MagazineAdapter(Context context,List<Magazine> list) {
-        super(context, 0, list);
-        magazines = list;
-    }
+@ActivityScope
+public class MagazineAdapter extends ArrayAdapter<Magazine> implements Action1<List<Magazine>> {
 
-    @Override
-    public Magazine getItem(int position) {
-        return magazines.get(position);
-    }
+  private final List<Magazine> magazines;
 
-    @Override
-    public int getPosition(Magazine item) {
-        return magazines.indexOf(item);
-    }
+  @Inject
+  public MagazineAdapter(Activity context, List<Magazine> list) {
+    super(context, 0, list);
+    magazines = list;
+  }
 
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).getId();
-    }
+  @Override
+  public Magazine getItem(int position) {
+    return magazines.get(position);
+  }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = MagazineRow.inflate( parent );
+  @Override
+  public int getPosition(Magazine item) {
+    return magazines.indexOf(item);
+  }
 
-        Magazine magazine = getItem(position);
-        ((MagazineRow) convertView).setItem(magazine);
+  @Override
+  public long getItemId(int position) {
+    return getItem(position).getId();
+  }
 
-        return convertView;
-    }
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    convertView = MagazineRow.inflate(parent);
 
-    @Override
-    public int getCount() {
-        return magazines.size();
-    }
+    Magazine magazine = getItem(position);
+    ((MagazineRow) convertView).setItem(magazine);
 
-    @Override
-    public void call(List<Magazine> list) {
+    return convertView;
+  }
 
-        magazines.clear();
-        magazines.addAll(list);
-        this.notifyDataSetChanged();
-    }
+  @Override
+  public int getCount() {
+    return magazines.size();
+  }
+
+  @Override
+  public void call(List<Magazine> list) {
+
+    magazines.clear();
+    magazines.addAll(list);
+    this.notifyDataSetChanged();
+  }
 }

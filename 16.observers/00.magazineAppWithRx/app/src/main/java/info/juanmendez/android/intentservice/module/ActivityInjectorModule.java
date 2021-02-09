@@ -12,7 +12,6 @@ import info.juanmendez.android.intentservice.ui.ListMagazinesActivity;
 @Module
 public abstract class ActivityInjectorModule {
 
-
   @ActivityScope
   @ContributesAndroidInjector(modules = ListMagazinesActivityModule.class)
   abstract ListMagazinesActivity listMagazinesActivity();

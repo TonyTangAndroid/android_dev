@@ -11,5 +11,4 @@ import info.juanmendez.android.intentservice.service.network.NetworkUpdate;
  */
 public interface IListMagazinesView extends NetworkUpdate{
     void onMagazineList();
-    void setAdapter( MagazineAdapter adapter );
-}
+ }

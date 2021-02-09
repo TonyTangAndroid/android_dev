@@ -9,7 +9,11 @@ import com.squareup.sqlbrite.SqlBrite;
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import info.juanmendez.android.intentservice.model.pojo.Magazine;
 import info.juanmendez.android.intentservice.ui.ListMagazinesActivity;
+import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Juan on 7/29/2015.
@@ -23,7 +27,17 @@ public abstract class ListMagazinesActivityModule {
 
   @Binds
   @ActivityScope
-  public abstract Activity Activity(ListMagazinesActivity activity);
+  public abstract Activity activity(ListMagazinesActivity activity);
+
+  @Binds
+  @ActivityScope
+  public abstract IListMagazinesView listMagazinesView (ListMagazinesActivity activity);
+
+  @Provides
+  @ActivityScope
+  public static List<Magazine> magazineList() {
+    return new ArrayList<>();
+  }
 
   @ActivityScope
   @Provides
@@ -33,7 +47,7 @@ public abstract class ListMagazinesActivityModule {
 
   @Provides
   @ActivityScope
- static public BriteContentResolver providesContentResolver(Activity activity, SqlBrite sqlBrite) {
+  static public BriteContentResolver providesContentResolver(Activity activity, SqlBrite sqlBrite) {
 
     return sqlBrite.wrapContentProvider(activity.getContentResolver());
   }

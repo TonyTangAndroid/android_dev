@@ -13,7 +13,6 @@ import info.juanmendez.android.intentservice.service.download.MagazineDispatcher
 import info.juanmendez.android.intentservice.service.provider.table.SQLPage;
 import info.juanmendez.android.intentservice.ui.MagazinePage;
 import java.util.ArrayList;
-import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -23,23 +22,27 @@ import rx.schedulers.Schedulers;
  */
 public class MagazinePresenter  {
 
-    AppCompatActivity activity;
+   private final AppCompatActivity activity;
 
-    @Inject
-    ArrayList<MagazinePage> pageList;
+    private final ArrayList<MagazinePage> pageList;
 
-    @Inject
-    MagazineDispatcher dispatcher;
+     private final  MagazineDispatcher dispatcher;
 
-    @Inject
-    BriteContentResolver briteContentResolver;
+    private final   BriteContentResolver briteContentResolver;
+
     Observable<SqlBrite.Query> queryObservable;
 
     WebViewAdapter adapter;
 
-    public MagazinePresenter(AppCompatActivity activity ){
+    public MagazinePresenter(AppCompatActivity activity,
+        ArrayList<MagazinePage> pageList,
+        MagazineDispatcher dispatcher,
+        BriteContentResolver briteContentResolver){
         this.activity = activity;
 
+      this.pageList = pageList;
+      this.dispatcher = dispatcher;
+      this.briteContentResolver = briteContentResolver;
     }
 
     public void pause() {

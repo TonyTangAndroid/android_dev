@@ -11,9 +11,6 @@ import com.squareup.sqlbrite.SqlBrite;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import info.juanmendez.android.intentservice.helper.MVPUtils;
 import info.juanmendez.android.intentservice.helper.MagazineUtil;
 import info.juanmendez.android.intentservice.helper.NetworkUtil;
 import info.juanmendez.android.intentservice.model.MagazineStatus;
@@ -28,6 +25,7 @@ import info.juanmendez.android.intentservice.service.provider.MagazineProvider;
 import info.juanmendez.android.intentservice.service.provider.table.SQLMagazine;
 import info.juanmendez.android.intentservice.service.proxy.DownloadProxy;
 import info.juanmendez.android.intentservice.ui.MagazineActivity;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,50 +40,63 @@ import rx.schedulers.Schedulers;
  */
 public class ListMagazinesPresenter implements IListMagazinesPresenter {
 
-    Activity activity;
-    MagazineAdapter adapter;
+    private final   Activity activity;
+  private final   MagazineAdapter adapter;
 
     //pull new magazines from restful service
     //and populate db
-    @Inject
-    protected DownloadProxy downloadProxy;
+    private final DownloadProxy downloadProxy;
 
     //detect connection and notify this presenter
-    @Inject
+    private final 
     NetworkReceiver networkReceiver;
 
-    @Inject
+    private final 
     Log log;
 
-    @Inject
+    private final 
     ArrayList<Magazine> magazines;
 
-    @Inject
+    private final 
     MagazineDispatcher magazineDispatcher;
 
-    @Inject
+    private final 
     MagazineNotificationSubject magazineNotificationSubject;
 
-    @Inject
-    SqlBrite sqlBrite;
+    private final SqlBrite sqlBrite;
 
     Subscription magazineSubscription;
     Subscription notificationSubscription;
 
-    @Inject
+    private final 
     BriteContentResolver briteContentResolver;
     Observable<SqlBrite.Query> queryObservable;
 
-    IListMagazinesView view;
+    private final IListMagazinesView view;
 
-    public ListMagazinesPresenter( Activity activity ){
+    @Inject
+    public ListMagazinesPresenter(Activity activity,
+        MagazineAdapter adapter,
+        DownloadProxy downloadProxy,
+        NetworkReceiver networkReceiver, Log log,
+        ArrayList<Magazine> magazines,
+        MagazineDispatcher magazineDispatcher,
+        MagazineNotificationSubject magazineNotificationSubject,
+        SqlBrite sqlBrite, BriteContentResolver briteContentResolver,
+        IListMagazinesView view){
         this.activity = activity;
-        adapter = new MagazineAdapter( activity.getApplication(), new ArrayList<Magazine>());
-        view = MVPUtils.getView( activity, IListMagazinesView.class );
-        view.setAdapter(adapter);
+        this.adapter = adapter;
+        this.downloadProxy = downloadProxy;
+        this.networkReceiver = networkReceiver;
+        this.log = log;
+        this.magazines = magazines;
+        this.magazineDispatcher = magazineDispatcher;
+        this.magazineNotificationSubject = magazineNotificationSubject;
+        this.sqlBrite = sqlBrite;
+        this.briteContentResolver = briteContentResolver;
+        this.view = view;
     }
 
-    @Override
     public void resume() {
 
         magazineSubscription = magazineDispatcher.subscribe( magazine -> {
@@ -114,7 +125,6 @@ public class ListMagazinesPresenter implements IListMagazinesPresenter {
         refreshList(false);
     }
 
-    @Override
     public void pause() {
 
         magazineDispatcher.unsubscribe(magazineSubscription);

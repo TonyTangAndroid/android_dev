@@ -7,15 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-
-import androidx.appcompat.app.AppCompatActivity;
 import dagger.android.support.DaggerAppCompatActivity;
 import info.juanmendez.android.intentservice.R;
 import info.juanmendez.android.intentservice.helper.NetworkUtil;
 import info.juanmendez.android.intentservice.model.adapter.MagazineAdapter;
-import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesPresenter;
 import info.juanmendez.android.intentservice.ui.listmagazine.IListMagazinesView;
 import info.juanmendez.android.intentservice.ui.listmagazine.ListMagazinesPresenter;
+import javax.inject.Inject;
 
 /**
  * Created by Juan on 7/29/2015.
@@ -25,7 +23,9 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
     ListView list;
     MagazineApp app;
     Button noNetworkButton;
-    IListMagazinesPresenter presenter;
+    @Inject MagazineAdapter adapter;
+  @Inject
+  ListMagazinesPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,9 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
         }
 
         list = findViewById(R.id.list );
-        presenter = new ListMagazinesPresenter(this);
+      list.setAdapter(adapter);
 
-        app = (MagazineApp)getApplication();
+      app = (MagazineApp)getApplication();
     }
 
 
@@ -81,12 +81,7 @@ public class ListMagazinesActivity extends DaggerAppCompatActivity implements IL
     public void onMagazineList(){
     }
 
-    @Override
-    public void setAdapter(MagazineAdapter adapter) {
-        list.setAdapter( adapter );
-    }
-
-    @Override
+  @Override
     public void onResume(){
         super.onResume();
         presenter.resume();
